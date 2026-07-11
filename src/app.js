@@ -1575,9 +1575,9 @@ function handleClientBookingSubmit(e) {
 
 function resetClientBookingForm() {
     document.getElementById('liff-booking-form').reset();
-    document.getElementById('client-booking-form-panel').classList.remove('d-none');
+   /* document.getElementById('client-booking-form-panel').classList.remove('d-none'); 
     document.getElementById('client-success-panel').classList.add('d-none');
-    togglePregnancyInput(false);
+    togglePregnancyInput(false);*/
 }
 
 // --------------------- Massager LIFF Emulator logic ----------------------
