@@ -35,7 +35,7 @@
                                      <h3 style="color: var(--primary); font-size: 1.25rem;"> MOMOMOM WELLNESS</h3>
                                     <p style="font-size: 0.75rem; color: var(--text-muted);">กรุณากรอกข้อมูลนัดหมายบริการ </p>
 
-
+                                         <input type="hidden" id="lineUserIdtext">  
 
 
 
@@ -157,13 +157,11 @@
                                                 <label>หมายเหตุ / อาการที่ต้องการเน้น</label>
                                                 <textarea id="liff-client-note" class="form-control form-control-sm" rows="2" placeholder="เช่น เน้นบ่าไหล่, ไม่นวดหลัง..."></textarea>
                                             </div>
-                                             <input type="hidden" id="lineUserIdtext">       
+                                                 
                                                     <button type="button" onclick="send()">
                                                         ส่งแบบฟอร์มการนัดหมาย
-                                                    </button>    
-                                            <!-- <button class="btn btn-primary" style="width: 100%; margin-top: 1rem;" > 
-                                                 <i class="fa-solid fa-paper-plane"></i>ส่งแบบฟอร์มการนัดหมาย</button>    -->
-                                                 
+                                                    </button>   
+                                                                                            
                                         </form>
                                     </div>
                                     
@@ -223,7 +221,7 @@
 
 
 
-            const msg = document.getElementById("msg").value.trim();
+            
             const name = document.getElementById("liff-client-name").value.trim();
             const phone = document.getElementById("liff-client-phone").value.trim();
             const date = document.getElementById("liff-booking-date").value.trim();
@@ -231,7 +229,7 @@
             const service = document.getElementById("liff-booking-service").value.trim();
             const duration = document.getElementById("liff-booking-duration").value.trim();
             const guests = document.getElementById("liff-booking-guests").value.trim();
-            const package = document.getElementById("liff-booking-package").value.trim();
+            const packageName = document.getElementById("liff-booking-package").value.trim();
             const weeks = document.getElementById("liff-pregnancy-weeks").value.trim();
             const address = document.getElementById("liff-client-address").value.trim();
             const map = document.getElementById("liff-client-map").value.trim();
@@ -248,12 +246,12 @@
             const message = 
 
             "รายละเอียดการจอง"+"\n\n"+
-             "ของคุณ (ชื่อไลน์) : " + msg + "\n" +
+            
              "รหัสบริการ"+"\n"+ "รหัสป้าหมอ"+"\n"+ 
              "นัดหมาย วันที่ " + date +" เวลา: " + time + "\n" +
             "บริการนวด: " + service + "\n" +
             "เวลาคอร์ส : " + duration + "\n" +
-            "แพ็คเกจ/คอร์ส : " + package + "\n" +
+            "แพ็คเกจ/คอร์ส : " + packageName + "\n" +
             "ลูกค้ากี่ท่าน : " + guests + "\n" +
             "อายุครรภ์ (กี่สัปดาห์) : " + weeks + "\n" +
             "รหัสลูกค้า"+"\n"+ "ชื่อลูกค้า: " + name + "\n" +
