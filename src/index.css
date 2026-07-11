@@ -559,6 +559,17 @@ button, input, select, textarea {
 }
 
 .form-control {
+    width: 80%;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--border-color);
+    background-color: var(--bg-main);
+    border-radius: var(--border-radius-md);
+    font-size: 0.9rem;
+    color: var(--text-dark);
+    transition: var(--transition);
+}
+
+.form-control-date {
     width: 50%;
     padding: 0.75rem 1rem;
     border: 1px solid var(--border-color);
