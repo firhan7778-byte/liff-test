@@ -38,7 +38,7 @@
 
 body {
     font-family: 'Outfit', 'Sarabun', sans-serif;
-    background-color: var(--bg-main);
+    background-color:#D97D8C;
     color: var(--text-dark);
     line-height: 1.6;
     overflow-x: hidden;
