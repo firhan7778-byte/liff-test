@@ -8,7 +8,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static(__dirname));
 
-const ACCESS_TOKEN = "QLb74tWfyexO5SXfwMtHmq1MU2ZWLdZvP9IqMinJrCn4sBx4EohDxn0rqH+vZL9Uj5efXBbwG0mhwecDmaIuh4+TiQCuR+k7n0wJw6pn/fXIY/eNNSWuqK6DPHKW07GwLhOeJI53h/G7yBXnoDsNRAdB04t89/1O/w1cDnyilFU=";
+const ACCESS_TOKEN = "zuorICwzxh8LvoLghb7qBykm2xyJ9BrkuP0p3QoiVIAjGKH60JoVP3UKmLVjnZQQyDM1uKJM+SQ8o+Do/2plchvzZXMliYUFh0uAuk+o65BH9yTzZXlaMrkXkEkMj+T/tgWH9qJqWIYXIJ993XWInAdB04t89/1O/w1cDnyilFU=";
 
 app.post("/send", async (req, res) => {
 
