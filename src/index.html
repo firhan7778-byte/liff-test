@@ -35,7 +35,7 @@
                                      <h3 style="color: var(--primary); font-size: 1.25rem;"> MOMOMOM WELLNESS</h3>
                                     <p style="font-size: 0.75rem; color: var(--text-muted);">กรุณากรอกข้อมูลนัดหมายบริการ </p>
 
-                                         <input type="hidden" id="lineUserIdtext" value="Ufd46f5dcc4ac804490598ed09576c4b1">  
+                                         <input type="hidden" id="lineUserIdtext">  
 
 
 
@@ -208,8 +208,8 @@
           profileName.innerText = profile.displayName;
           profileUID.innerText = profile.userId;
 
-         //  collect userId
-          document.getElementById("nameservice").value = profile.userId;
+          // collect userId
+          document.getElementById("lineUserIdtext").value = profile.userId;
 
           // show profile
           lineprofile.style.display = "block";
@@ -224,7 +224,7 @@
 
 
 
-            const nameservice = document.getElementById("nameservice").value.trim();
+            
             const name = document.getElementById("liff-client-name").value.trim();
             const phone = document.getElementById("liff-client-phone").value.trim();
             const date = document.getElementById("liff-booking-date").value.trim();
@@ -249,9 +249,8 @@
             const message = 
 
             "รายละเอียดการจอง"+"\n\n"+
-             nameservice+"\n"+
-             "รหัสบริการ"+"\n"+
-            "รหัสป้าหมอ"+"\n"+ 
+            
+             "รหัสบริการ"+"\n"+ "รหัสป้าหมอ"+"\n"+ 
              "นัดหมาย วันที่ " + date +" เวลา: " + time + "\n" +
             "บริการนวด: " + service + "\n" +
             "เวลาคอร์ส : " + duration + "\n" +
