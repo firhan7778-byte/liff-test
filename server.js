@@ -6,6 +6,8 @@ const path = require("path");
 
 const app = express();
 
+const adminRoute = require("./routes/admin");
+app.use("/api/admin", adminRoute);
 
 
 app.use(express.json());
