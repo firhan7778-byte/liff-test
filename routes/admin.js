@@ -5,11 +5,16 @@ const router = express.Router();
 const db = require("../db");
 
 router.post("/login", async (req, res) => {
-    
+
     console.log("Method:", req.method);
     console.log("Headers:", req.headers);
     console.log("Body:", req.body);
-
+        if (!req.body) {
+        return res.status(400).json({
+            success: false,
+            message: "req.body is undefined"
+        });
+    }
 
 
     const { password } = req.body;
@@ -28,6 +33,8 @@ router.post("/login", async (req, res) => {
         }
 
         const admin = rows[0];
+        console.log("Password =", password);
+        console.log("Hash =", admin.password);
 
         const match = await bcrypt.compare(
             password,

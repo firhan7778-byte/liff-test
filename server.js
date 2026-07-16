@@ -7,7 +7,8 @@ const app = express();
 
 const db = require("./db");
 const bcrypt = require("bcrypt");
-app.use("/api/admin", require("./routes/admin"));
+const adminRoute = require("./routes/admin");
+
 
 app.use(cors());
 app.use(express.json());
