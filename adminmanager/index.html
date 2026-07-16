@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOMOMOM Wellness Solution - Management System</title>
+    <!-- Fonts and Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+
+    <!-- Admin Login Overlay (when logged out) -->
+    <div id="admin-login-overlay" class="modal-overlay active" style="z-index: 9999;">
+        <div class="modal-box text-center" style="max-width: 420px; border: 2px solid var(--primary-soft); padding: 3rem 2rem;">
+            <div class="logo-icon" style="margin: 0 auto 1.5rem; width: 64px; height: 64px; font-size: 2rem;">M</div>
+            <h2 style="font-family: 'Playfair Display', serif; color: var(--primary); margin-bottom: 0.5rem; font-size: 1.8rem;">MOMOMOM</h2>
+            <p style="color: var(--text-muted); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 2rem;">Wellness Solution Admin</p>
+            
+            <div id="login-form-view">
+                <button onclick="loginWithLineMock()" class="btn-line mb-3">
+                    <i class="fab fa-line"></i> เข้าสู่ระบบด้วย LINE
+                </button>
+                <div style="display: flex; align-items: center; justify-content: center; gap: 0.5rem; color: var(--text-muted); font-size: 0.8rem; margin-bottom: 1.5rem;">
+                    <hr style="flex-grow: 1; border-color: var(--border-color);">
+                    <span>หรือ ใช้รหัสของระบบ</span>
+                    <hr style="flex-grow: 1; border-color: var(--border-color);">
+                </div>
+                <div class="form-group">
+                    <input type="password" id="admin-passcode-input" class="form-control text-center" placeholder="ใส่รหัสผ่านระบบ (Default: 123456)">
+                </div>
+                <button onclick="loginWithPasscode()" class="btn btn-primary" style="width: 100%; justify-content: center;">เข้าสู่ระบบ</button>
+                
+                <p style="margin-top: 1.5rem; font-size: 0.75rem; color: var(--text-muted);">
+                    ต้องการเปลี่ยนรหัสผ่าน? คลิกปุ่ม 
+                    <a href="#" onclick="showRootResetView()" style="color: var(--primary); text-decoration: underline;">Root Passcode Settings</a>
+                </p>
+            </div>
+
+            <!-- Root Reset Settings View inside Login -->
+            <div id="root-reset-view" class="d-none">
+                <h3 style="font-size: 1.1rem; margin-bottom: 1rem; color: var(--text-dark);">ตั้งค่ารหัสผ่านใหม่ (Root Level)</h3>
+                <div class="form-group">
+                    <input type="password" id="root-passcode-verify" class="form-control" placeholder="ใส่รหัสผ่าน Root เดิม (Default: 123456)">
+                </div>
+                <div class="form-group">
+                    <input type="password" id="new-admin-passcode" class="form-control" placeholder="ใส่รหัสผ่านใหม่ที่ต้องการ">
+                </div>
+                <div style="display: flex; gap: 0.5rem; margin-top: 1.5rem;">
+                    <button onclick="cancelRootReset()" class="btn btn-secondary" style="flex: 1;">ยกเลิก</button>
+                    <button onclick="executeRootReset()" class="btn btn-gold" style="flex: 1;">บันทึกรหัสใหม่</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main System Layout -->
+    <div class="app-container">                   
+        
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="logo-container">
+               <dib class="logo-img">    
+                        <img src="images/logoemply.png"  width="90" height="50" center
+                    >
+                   </dib>
+                <div class="logo-text">
+                    <span class="logo-title">MOMOMOM</span>
+                    <span class="logo-subtitle">Wellness Solution</span>
+                </div>
+            </div>
+            
+            <nav class="nav-menu">
+                <a onclick="switchView('dashboard')" id="nav-dashboard" class="nav-item active">
+                    <i class="fa-solid fa-chart-line"></i> แดชบอร์ดมอนิเตอร์
+                </a>
+                <a onclick="switchView('massagers')" id="nav-massagers" class="nav-item">
+                    <i class="fa-solid fa-user-doctor"></i> รายชื่อหมอป้า
+                </a>
+                <a onclick="switchView('clients')" id="nav-clients" class="nav-item">
+                    <i class="fa-solid fa-users"></i> รายชื่อลูกค้า
+                </a>
+                <a onclick="switchView('templates')" id="nav-templates" class="nav-item">
+                    <i class="fa-solid fa-envelope-open-text"></i> เทมเพลตส่งข้อความ
+                </a>
+               <!--  <a onclick="switchView('sql-view')" id="nav-sql-view" class="nav-item">
+                   <i class="fa-solid fa-database"></i> โครงสร้างฐานข้อมูล SQL
+                </a> -->
+                <a onclick="switchView('simulators')" id="nav-simulators" class="nav-item">
+                    <i class="fa-solid fa-mobile-screen-button"></i> เครื่องมือจำลอง LIFF
+                </a>
+            </nav>
+
+            <!-- Active User Display -->
+            <div class="sidebar-footer">
+                <div style="margin-bottom: 0.5rem; font-size: 0.85rem; font-weight: 500;">
+                    <span class="status-indicator online"></span> แอดมิน: <span id="active-admin-name">Guest</span>
+                </div>
+                <button onclick="logoutAdmin()" class="btn btn-secondary btn-sm" style="width: 100%; justify-content: center;">
+                    <i class="fa-solid fa-right-from-bracket"></i> ออกจากระบบ
+                </button>
+                <div style="margin-top: 1rem; font-size: 0.7rem; color: var(--text-muted);">
+                    MOMOMOM v1.0.0
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Workspace -->
+        <main class="main-content">
+            
+            <!-- Dashboard View -->
+            <div id="view-dashboard" class="view-panel">
+                <div class="header-bar">
+                    <div class="page-title-group">
+                        <h2>แผงควบคุมและมอนิเตอร์งาน</h2>
+                        <p>จัดการการจอง, การจ่ายงานหมอนวด, และติดตามสถานะเรียลไทม์</p>
+                    </div>
+                    <div>
+                        <button onclick="openBookingModal()" class="btn btn-primary">
+                            <i class="fa-solid fa-calendar-plus"></i> เพิ่มงานจองนวดใหม่
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Simulation Info Panel (MassageAPI simulation controller) -->
+                <div class="sim-controls-panel">
+                    <h4><i class="fa-solid fa-clock"></i> ระบบแจ้งเตือนงานอัตโนมัติ (MassageAPI)</h4>
+                    <div class="sim-controls-grid">
+                        <div class="sim-card">
+                            <h5>แจ้งเตือนงานวันพรุ่งนี้</h5>
+                            <p>ส่งข้อความแจ้งเตือนตารางงานวันพรุ่งนี้ให้หมอทุกคนที่มีงาน ในช่วงเวลา 20:00 น.</p>
+                            <button onclick="triggerTomorrowJobsAlert()" class="btn btn-gold btn-sm" style="width: 100%;">
+                                <i class="fa-solid fa-bell"></i> ส่งข้อความแจ้งเตือนวันพรุ่งนี้
+                            </button>
+                        </div>
+                        <div class="sim-card">
+                            <h5>แจ้งเตือนล่วงหน้า 1 ชั่วโมง</h5>
+                            <p>สแกนงานที่กำลังจะเริ่มภายใน 1 ชั่วโมงข้างหน้าและส่งเตือนหมอนวด</p>
+                            <button onclick="triggerOneHourAlert()" class="btn btn-gold btn-sm" style="width: 100%;">
+                                <i class="fa-solid fa-hourglass-start"></i> ส่งข้อความเตือน 1 ชม. ล่วงหน้า
+                            </button>
+                        </div>
+                        <div class="sim-card">
+                            <h5>เวลา</h5>
+                            <p>ข้อมูลจำลองจะอิงตามระบบเวลาปัจจุบัน ช่วยให้ง่ายต่อการทดสอบคอร์ส/แจ้งเตือน</p>
+                            <div style="font-size: 0.8rem; font-weight: bold; color: var(--accent-gold); text-align: center; padding: 0.3rem;">
+                                วันนี้: <span id="current-datetime"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stats Counters -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fa-solid fa-calendar-check"></i></div>
+                        <div class="stat-info">
+                            <span class="stat-value" id="stat-total-bookings">0</span>
+                            <span class="stat-label">เคสทั้งหมดในระบบ</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fa-solid fa-spinner"></i></div>
+                        <div class="stat-info">
+                            <span class="stat-value" id="stat-active-bookings">0</span>
+                            <span class="stat-label">งานกำลังดำเนินการ</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon gold"><i class="fa-solid fa-award"></i></div>
+                        <div class="stat-info">
+                            <span class="stat-value" id="stat-repeated-requests">0</span>
+                            <span class="stat-label">เคสรีเควสหมอคนเดิม</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fa-solid fa-baht-sign"></i></div>
+                        <div class="stat-info">
+                            <span class="stat-value" id="stat-total-expenses">฿0.00</span>
+                            <span class="stat-label">ค่าใช้จ่ายจ่ายให้หมอ</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Main dashboard tables and calendar -->
+                <div class="dashboard-grid">
+                    
+                    <!-- Left: Work List / Booking schedule -->
+                    <div>
+                        <div class="panel-card">
+                            <div class="panel-header">
+                                <h3><i class="fa-solid fa-clipboard-list"></i> รายการจองงานวันนี้เเละที่กำลังมาถึง</h3>
+                                <div style="display: flex; gap: 0.5rem;">
+                                    <button class="btn btn-secondary btn-sm" onclick="filterBookings('all')">ทั้งหมด</button>
+                                    <button class="btn btn-secondary btn-sm" onclick="filterBookings('pending_details')">รอแอดมินตรวจ</button>
+                                    <button class="btn btn-secondary btn-sm" onclick="filterBookings('broadcasting')">กำลังหาหมอนวด</button>
+                                    <button class="btn btn-secondary btn-sm" onclick="filterBookings('assigned')">จ่ายงานแล้ว</button>
+                                </div>
+                            </div>
+                            
+                            <div class="jobs-list" id="dashboard-jobs-container">
+                                <!-- Cards dynamically generated by app.js -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right: Calendar view & quick summary -->
+                    <div>
+                        <div class="panel-card">
+                                <div class="panel-header">
+                                    <h3><i class="fa-solid fa-calendar-days"></i> ปฏิทินตารางงาน</h3>
+                                    </div>
+
+                                    <div id="calendar-month-name"
+                                        style="font-size:0.9rem;text-align:center;font-weight:bold;color:var(--primary);margin-bottom:0.5rem;">
+                                    </div>
+
+                                    <div class="calendar-grid" id="calendar-days-container"></div>
+
+                                    <div style="margin-top:1.5rem;font-size:0.8rem;color:var(--text-muted);">
+                                        <span class="badge badge-primary" style="margin-right:0.5rem;">●</span> เคสทั่วไป
+                                        <span class="badge badge-gold" style="margin-left:0.5rem;margin-right:0.5rem;">★</span> รีเควสหมอคนเดิม (กรอบสีทอง)
+                                    </div>
+                                </div>
+
+                        <div class="panel-card">
+                            <div class="panel-header">
+                                <h3><i class="fa-solid fa-comment-dots"></i> หมอนวดที่สนใจรับงานล่าสุด</h3>
+                            </div>
+                            <div style="max-height: 250px; overflow-y: auto;" id="applied-massagers-list">
+                                <!-- List of massagers who typed 'สนใจรับงาน!!' -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Massagers Management View -->
+            <div id="view-massagers" class="view-panel d-none">
+                <div class="header-bar">
+                    <div class="page-title-group">
+                        <h2>ข้อมูลหมอนวด (Massager Management)</h2>
+                        <p>จัดการโปรไฟล์หมอนวด, อนุมัติผู้สมัครใหม่, ดูประวัติรับเคส และจัดการเรทติ้ง</p>
+                    </div>
+                    <div>
+                        <button onclick="openMassagerModal()" class="btn btn-primary">
+                            <i class="fa-solid fa-user-plus"></i> เพิ่มหมอนวดใหม่
+                        </button>
+                    </div>
+                </div>
+
+                <div class="panel-card">
+                    <div class="table-responsive">
+                        <table class="custom-table" id="massagers-table">
+                            <thead>
+                                <tr>
+                                    <th>รหัสหมอ</th>
+                                    <th>ชื่อหมอนวด</th>
+                                    <th>เบอร์โทร</th>
+                                    <th>โซนรับงาน</th>
+                                    <th>จำนวนเคส</th>
+                                    <th>คะแนนเรทติ้ง</th>
+                                    <th>จัดการ</th>
+                                </tr>
+                            </thead>
+                            <tbody id="massagers-table-body">
+                                <!-- Filled by app.js -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Clients Management View -->
+            <div id="view-clients" class="view-panel d-none">
+                <div class="header-bar">
+                    <div class="page-title-group">
+                        <h2>ระบบข้อมูลลูกค้า (Client Directory)</h2>
+                        <p>ดูประวัติการเข้าใช้งาน, พิกัดจดจำที่อยู่, และข้อมูลรหัสลูกค้า MOM-XXXX</p>
+                    </div>
+                    <div>
+                        <button onclick="openClientModal()" class="btn btn-primary">
+                            <i class="fa-solid fa-user-plus"></i> เพิ่มรายชื่อลูกค้าใหม่
+                        </button>
+                    </div>
+                </div>
+
+                <div class="panel-card">
+                    <div class="table-responsive">
+                        <table class="custom-table" id="clients-table">
+                            <thead>
+                                <tr>
+                                    <th>รหัสลูกค้า</th>
+                                    <th>ชื่อลูกค้า</th>
+                                    <th>เบอร์โทร</th>
+                                    <th>ระดับแรงนวด</th>
+                                    <th>สัตว์เลี้ยงที่บ้าน</th>
+                                    <th>ที่อยู่อาศัย</th>
+                                    <th>จัดการ</th>
+                                </tr>
+                            </thead>
+                            <tbody id="clients-table-body">
+                                <!-- Filled by app.js -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Message Templates Editor View -->
+            <div id="view-templates" class="view-panel d-none">
+                <div class="header-bar">
+                    <div class="page-title-group">
+                        <h2>แก้ไขรูปแบบข้อความของระบบ (MessageAPI templates)</h2>
+                        <p>ปรับแต่งข้อความกลางที่จะส่งเข้า LINE OA สำหรับลูกค้า เเละ หมอนวด</p>
+                    </div>
+                </div>
+
+                <div class="panel-card" style="max-width: 800px;">
+                    <div class="form-group">
+                        <label for="template-client-confirm">1. ข้อความคอนเฟิร์มงานฝั่งลูกค้า (ส่ง LINE OA ลูกค้าเมื่อแอดมินจ่ายงาน)</label>
+                        <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.5rem;">
+                            ตัวแปรทดแทนได้: <strong>{client_name}</strong>, <strong>{date}</strong>, <strong>{time}</strong>, <strong>{massager_name}</strong>, <strong>{massager_code}</strong>, <strong>{service}</strong>, <strong>{duration}</strong>, <strong>{address}</strong>
+                        </div>
+                        <textarea id="template-client-confirm" class="form-control" rows="6" style="font-family: monospace;"></textarea>
+                    </div>
+                    <div class="form-group" style="margin-top: 2rem;">
+                        <label for="template-massager-broadcast">2. ข้อความยิงงานเสนอฝั่งหมอนวด (ส่งเข้า LINE OA หมอทั้งหมดเพื่อรับสมัคร)</label>
+                        <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.5rem;">
+                            ตัวแปรทดแทนได้: <strong>{date}</strong>, <strong>{time}</strong>, <strong>{service}</strong>, <strong>{duration}</strong>, <strong>{zone}</strong>, <strong>{client_code}</strong>, <strong>{guests}</strong>, <strong>{repeated_badge}</strong>, <strong>{case_fee}</strong>, <strong>{atk_bonus}</strong>
+                        </div>
+                        <textarea id="template-massager-broadcast" class="form-control" rows="6" style="font-family: monospace;"></textarea>
+                    </div>
+                    <div class="form-group" style="margin-top: 2rem;">
+                        <label for="template-massager-confirm">3. ข้อความคอนเฟิร์มงานเดี่ยวส่งให้หมอนวดที่ได้รับเลือก (ส่ง LINE OA หมอที่รับงาน)</label>
+                        <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.5rem;">
+                            ตัวแปรทดแทนได้: <strong>{massager_name}</strong>, <strong>{booking_code}</strong>, <strong>{date}</strong>, <strong>{time}</strong>, <strong>{service}</strong>, <strong>{duration}</strong>, <strong>{client_name}</strong>, <strong>{client_phone}</strong>, <strong>{map_link}</strong>, <strong>{address}</strong>, <strong>{client_note}</strong>, <strong>{case_fee}</strong>, <strong>{atk_bonus}</strong>, <strong>{repeat_bonus}</strong>
+                        </div>
+                        <textarea id="template-massager-confirm" class="form-control" rows="8" style="font-family: monospace;"></textarea>
+                    </div>
+                    <div style="margin-top: 1.5rem; text-align: right;">
+                        <button onclick="saveMessageTemplates()" class="btn btn-primary">
+                            <i class="fa-solid fa-save"></i> บันทึกข้อมูลเทมเพลตทั้งหมด
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <!-- SQL DB Structure View -->
+<!--
+            
+            <div id="view-sql-view" class="view-panel d-none">
+                <div class="header-bar">
+                    <div class="page-title-group">
+                        <h2>โครงสร้างฐานข้อมูลเชิงสัมพันธ์ SQL Schema</h2>
+                        <p>สามารถดู คัดลอก หรือดาวน์โหลดไฟล์ตารางสร้างระบบ เพื่อนำไปประยุกต์ใช้จริง</p>
+                    </div>
+                    <div>
+                        <a href="schema.sql" download class="btn btn-gold">
+                            <i class="fa-solid fa-download"></i> ดาวน์โหลดไฟล์ schema.sql
+                        </a>
+                    </div>
+                </div>
+
+                <div class="panel-card">
+                    <div class="panel-header">
+                        <h3><i class="fa-solid fa-code"></i> MOMOMOM SQL Database Layout</h3>
+                    </div>
+                   <pre class="sql-container"><span class="sql-comment">-- MOMOMOM Wellness Solution Database Table structures
+-- Read database schema here</span>
+<span class="sql-keyword">CREATE TABLE</span> clients (
+    line_user_id <span class="sql-keyword">VARCHAR</span>(100) <span class="sql-keyword">PRIMARY KEY</span>,
+    client_id <span class="sql-keyword">VARCHAR</span>(10) <span class="sql-keyword">UNIQUE NOT NULL</span>, <span class="sql-comment">-- MOM-XXXX</span>
+    name <span class="sql-keyword">VARCHAR</span>(100) <span class="sql-keyword">NOT NULL</span>,
+    phone <span class="sql-keyword">VARCHAR</span>(20) <span class="sql-keyword">NOT NULL</span>,
+    address <span class="sql-keyword">TEXT NOT NULL</span>,
+    google_map_link <span class="sql-keyword">TEXT</span>,
+    massage_level <span class="sql-keyword">VARCHAR</span>(50) <span class="sql-keyword">DEFAULT</span> <span class="sql-string">'Medium'</span>,
+    pets_info <span class="sql-keyword">VARCHAR</span>(255) <span class="sql-keyword">DEFAULT</span> <span class="sql-string">'None'</span>,
+    notes <span class="sql-keyword">TEXT</span>
+);
+
+<span class="sql-keyword">CREATE TABLE</span> massagers (
+    line_user_id <span class="sql-keyword">VARCHAR</span>(100) <span class="sql-keyword">PRIMARY KEY</span>,
+    massager_id <span class="sql-keyword">VARCHAR</span>(10) <span class="sql-keyword">UNIQUE NOT NULL</span>, <span class="sql-comment">-- MCA-XXXXX</span>
+    name <span class="sql-keyword">VARCHAR</span>(100) <span class="sql-keyword">NOT NULL</span>,
+    phone <span class="sql-keyword">VARCHAR</span>(20) <span class="sql-keyword">NOT NULL</span>,
+    zone <span class="sql-keyword">VARCHAR</span>(100) <span class="sql-keyword">NOT NULL</span>,
+    rating_stars <span class="sql-keyword">DECIMAL</span>(2,1) <span class="sql-keyword">DEFAULT</span> 5.0,
+    rating_score <span class="sql-keyword">INT DEFAULT</span> 10,
+    is_active <span class="sql-keyword">BOOLEAN DEFAULT TRUE</span>
+);
+
+<span class="sql-keyword">CREATE TABLE</span> bookings (
+    booking_id <span class="sql-keyword">VARCHAR</span>(20) <span class="sql-keyword">PRIMARY KEY</span>, <span class="sql-comment">-- MOYYMMDD-XXX</span>
+    client_line_id <span class="sql-keyword">VARCHAR</span>(100) <span class="sql-keyword">NOT NULL</span>,
+    massager_line_id <span class="sql-keyword">VARCHAR</span>(100) <span class="sql-keyword">NULL</span>,
+    appointment_date <span class="sql-keyword">DATE NOT NULL</span>,
+    appointment_time <span class="sql-keyword">TIME NOT NULL</span>,
+    service_type <span class="sql-keyword">VARCHAR</span>(100) <span class="sql-keyword">NOT NULL</span>,
+    course_duration <span class="sql-keyword">VARCHAR</span>(50) <span class="sql-keyword">NOT NULL</span>,
+    package_name <span class="sql-keyword">VARCHAR</span>(200) <span class="sql-keyword">NOT NULL</span>,
+    guests_count <span class="sql-keyword">INT DEFAULT</span> 1,
+    pregnancy_weeks <span class="sql-keyword">INT DEFAULT</span> 0,
+    address <span class="sql-keyword">TEXT NOT NULL</span>,
+    google_map_link <span class="sql-keyword">TEXT NOT NULL</span>,
+    massage_level <span class="sql-keyword">VARCHAR</span>(50) <span class="sql-keyword">NOT NULL</span>,
+    pets <span class="sql-keyword">VARCHAR</span>(255) <span class="sql-keyword">NOT NULL</span>,
+    client_note <span class="sql-keyword">TEXT</span>,
+    is_repeated_request <span class="sql-keyword">BOOLEAN DEFAULT FALSE</span>,
+    booking_status <span class="sql-keyword">VARCHAR</span>(30) <span class="sql-keyword">DEFAULT</span> <span class="sql-string">'pending_details'</span>,
+    <span class="sql-keyword">FOREIGN KEY</span> (client_line_id) <span class="sql-keyword">REFERENCES</span> clients(line_user_id),
+    <span class="sql-keyword">FOREIGN KEY</span> (massager_line_id) <span class="sql-keyword">REFERENCES</span> massagers(line_user_id)
+);
+
+<span class="sql-keyword">CREATE TABLE</span> booking_payments (
+    booking_id <span class="sql-keyword">VARCHAR</span>(20) <span class="sql-keyword">PRIMARY KEY</span>,
+    points_earned <span class="sql-keyword">INT DEFAULT</span> 0,
+    case_fee <span class="sql-keyword">DECIMAL</span>(10,2) <span class="sql-keyword">DEFAULT</span> 0.00,
+    bonus <span class="sql-keyword">DECIMAL</span>(10,2) <span class="sql-keyword">DEFAULT</span> 0.00,
+    bonus_atk <span class="sql-keyword">DECIMAL</span>(10,2) <span class="sql-keyword">DEFAULT</span> 0.00,
+    bonus_repeat <span class="sql-keyword">DECIMAL</span>(10,2) <span class="sql-keyword">DEFAULT</span> 0.00,
+    admin_note <span class="sql-keyword">TEXT</span>,
+    <span class="sql-keyword">FOREIGN KEY</span> (booking_id) <span class="sql-keyword">REFERENCES</span> bookings(booking_id)
+);
+</pre>-->
+                </div>
+            </div>
+
+            <!-- LIFF Simulator view (interactive phone emulators) 
+            <div id="view-simulators" class="view-panel d-none">
+                <div class="header-bar">
+                    <div class="page-title-group">
+                        <h2>LINE LIFF Apps - จำลองการทำงานฝั่งมือถือ</h2>
+                        <p>ทดสอบการลงทะเบียนของหมอนวด การรับงาน การแจ้งเตือน และแบบฟอร์มการจองของลูกค้า</p>
+                    </div>
+                </div>-->
+
+                <div class="simulator-layout">
+                    
+                    <!-- Left Device: Client App (LIFF) -->
+                    <div>
+                        <h3 class="text-center mb-3" style="font-size: 1.1rem; color: var(--primary);">
+                            <i class="fa-solid fa-user"></i> ฝั่งลูกค้า: LINE LIFF จองคอร์ส
+                        </h3>
+                        <div class="phone-mockup">
+                            <div class="phone-notch"></div>
+                            <div class="phone-screen">
+                                <div class="liff-line-header">
+                                    <div class="liff-line-title"><i class="fab fa-line"></i> MOMOMOM BOOKING</div>
+                                    <div class="liff-line-close">×</div>
+                                </div>
+                                <div class="line-user-select-bar">
+                                    <span>LINE User: <span id="client-sim-name">คุณธิดา (สมมติ)</span></span>
+                                    <button onclick="switchSimulatedClient()" class="btn btn-secondary btn-sm" style="padding: 0.1rem 0.4rem; font-size: 0.7rem;">สลับคน</button>
+                                </div>
+                                
+                                <div class="liff-content" id="client-liff-container">
+                                    <!-- Booking Form -->
+                                    <div id="client-booking-form-panel">
+                                        <div style="text-align: center; margin-bottom: 1rem;">
+                                            <h4 style="color: var(--primary); font-size: 1.25rem;">จองบริการสปา & นวด</h4>
+                                            <p style="font-size: 0.75rem; color: var(--text-muted);">กรุณากรอกข้อมูลนัดหมายบริการ</p>
+                                        </div>
+
+                                        <form id="liff-booking-form" onsubmit="handleClientBookingSubmit(event)">
+                                            <!-- Hidden values for line identity -->
+                                            <input type="hidden" id="liff-client-line-id" value="line_client_001">
+                                            
+                                            <div class="form-group">
+                                                <label>ชื่อ-นามสกุล *</label>
+                                                <input type="text" id="liff-client-name" class="form-control form-control-sm" required placeholder="เช่น ธิดา รักสุขภาพ">
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label>เบอร์โทรศัพท์ *</label>
+                                                <input type="tel" id="liff-client-phone" class="form-control form-control-sm" required placeholder="เช่น 0891234567">
+                                            </div>
+
+                                            <div class="form-row">
+                                                <div class="form-group">
+                                                    <label>วันที่นัดหมาย *</label>
+                                                    <input type="date" id="liff-booking-date" class="form-control form-control-sm" required>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>เวลาที่ต้องการ *</label>
+                                                    <input type="time" id="liff-booking-time" class="form-control form-control-sm" required>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label>บริการนวด *</label>
+                                                <select id="liff-booking-service" class="form-control form-control-sm" onchange="updateLiffPackages()">
+                                                    <option value="นวดอโรมา">นวดน้ำมันอโรมา (Aroma Massage)</option>
+                                                    <option value="นวดไทยโบราณ">นวดไทยโบราณ (Thai Traditional)</option>
+                                                    <option value="นวดสปาครรภ์">นวดคุณแม่ตั้งครรภ์ (Pregnancy Spa)</option>
+                                                </select>
+                                            </div>
+
+                                            <div class="form-row">
+                                                <div class="form-group">
+                                                    <label>เวลาคอร์ส *</label>
+                                                    <select id="liff-booking-duration" class="form-control form-control-sm">
+                                                        <option value="60 นาที">60 นาที (1 ชม.)</option>
+                                                        <option value="90 นาที">90 นาที (1.5 ชม.)</option>
+                                                        <option value="120 นาที">120 นาที (2 ชม.)</option>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>จำนวนลูกค้า *</label>
+                                                    <select id="liff-booking-guests" class="form-control form-control-sm">
+                                                        <option value="1">1 ท่าน</option>
+                                                        <option value="2">2 ท่าน</option>
+                                                        <option value="3">3 ท่าน</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label>แพ็คเกจ/คอร์ส *</label>
+                                                <select id="liff-booking-package" class="form-control form-control-sm">
+                                                    <!-- Filled based on service -->
+                                                </select>
+                                            </div>
+
+                                            <!-- Pregnancy Check -->
+                                            <div class="form-group">
+                                                <label>กำลังตั้งครรภ์อยู่หรือไม่?</label>
+                                                <div style="display: flex; gap: 1rem; align-items: center; font-size: 0.85rem;">
+                                                    <label><input type="radio" name="pregnancy-check" value="no" checked onchange="togglePregnancyInput(false)"> ไม่ได้ตั้งครรภ์</label>
+                                                    <label><input type="radio" name="pregnancy-check" value="yes" onchange="togglePregnancyInput(true)"> ตั้งครรภ์</label>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group d-none" id="pregnancy-weeks-group">
+                                                <label>อายุครรภ์ (กี่สัปดาห์) *</label>
+                                                <input type="number" id="liff-pregnancy-weeks" class="form-control form-control-sm" placeholder="เช่น 24 สัปดาห์" min="1" max="40">
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label>ที่อยู่ในการให้บริการ *</label>
+                                                <textarea id="liff-client-address" class="form-control form-control-sm" rows="2" placeholder="บ้านเลขที่, ชื่อคอนโด/หมู่บ้าน, ซอย, ถนน..." required></textarea>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label>แผนที่ Google Map Link *</label>
+                                                <input type="url" id="liff-client-map" class="form-control form-control-sm" placeholder="เช่น https://maps.app.goo.gl/..." required>
+                                            </div>
+
+                                            <div class="form-row">
+                                                <div class="form-group">
+                                                    <label>ระดับน้ำหนักแรงนวด</label>
+                                                    <select id="liff-booking-level" class="form-control form-control-sm">
+                                                        <option value="เบา (Light)">เบา (Light)</option>
+                                                        <option value="ปานกลาง (Medium)" selected>ปานกลาง (Medium)</option>
+                                                        <option value="หนัก (Firm)">หนัก (Firm)</option>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>สัตว์เลี้ยงที่บ้าน</label>
+                                                    <input type="text" id="liff-client-pets" class="form-control form-control-sm" placeholder="เช่น มีแมว 2 ตัว, ไม่มี">
+                                                </div>
+                                            </div>
+
+                                            <!-- Repeated Request -->
+                                            <div class="form-group">
+                                                <label style="color: var(--accent-gold);"><i class="fa-solid fa-star"></i> ระบุเจาะจงหมอนวดคนเดิม</label>
+                                                <select id="liff-booking-request-massager" class="form-control form-control-sm" style="border-color: var(--accent-gold);">
+                                                    <option value="none">-- ไม่ระบุเจาะจง (จองทั่วไป) --</option>
+                                                    <!-- Filled dynamically -->
+                                                </select>
+                                                <div style="font-size: 0.7rem; color: var(--text-muted); margin-top: 0.2rem;">
+                                                    หากเลือกหมอคนเดิม ระบบจะจ่ายงานให้ท่านนั้นพิจารณาก่อน และแสดงกรอบสีทองพิเศษในระบบแอดมิน
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label>หมายเหตุ / อาการที่ต้องการเน้น</label>
+                                                <textarea id="liff-client-note" class="form-control form-control-sm" rows="2" placeholder="เช่น เน้นบ่าไหล่, ไม่นวดหลัง..."></textarea>
+                                            </div>
+
+                                            <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">
+                                                <i class="fa-solid fa-paper-plane"></i> ส่งแบบฟอร์มการนัดหมาย
+                                            </button>
+                                        </form>
+                                    </div>
+                                    
+                                    <!-- Booking Success Info -->
+                                    <div id="client-success-panel" class="d-none text-center" style="padding: 3rem 1rem;">
+                                        <div class="logo-icon" style="background: var(--success); color: white; width: 60px; height: 60px; font-size: 2rem; margin: 0 auto 1.5rem;"><i class="fa-solid fa-check"></i></div>
+                                        <h4 style="color: var(--success); font-size: 1.4rem; margin-bottom: 1rem;">ส่งข้อมูลการจองสำเร็จ!</h4>
+                                        <p style="font-size: 0.9rem; color: var(--text-slate); margin-bottom: 2rem;">
+                                            แอดมินได้รับข้อมูลของคุณแล้ว รหัสการจองของคุณคือ:
+                                            <strong id="client-booking-result-code" style="display: block; font-size: 1.3rem; margin: 0.5rem 0; color: var(--primary);">MO260708-001</strong>
+                                            และรหัสลูกค้าของท่านคือ <strong id="client-mom-code" style="color: var(--accent-gold);">MOM-0001</strong>
+                                        </p>
+                                        <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 2rem;">แอดมินจะดำเนินการค้นหาหมอนวดและยืนยันข้อความแจ้งเตือนกลับหาท่านทาง LINE OA ค่ะ</p>
+                                        <button onclick="resetClientBookingForm()" class="btn btn-secondary" style="width: 100%;">ทำการนัดหมายเพิ่ม</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Device: Massager App (LIFF) -->
+                    <div>
+                        <h3 class="text-center mb-3" style="font-size: 1.1rem; color: var(--primary);">
+                            <i class="fa-solid fa-user-doctor"></i> ฝั่งหมอนวด: LINE LIFF หมอนวด
+                        </h3>
+                        <div class="phone-mockup">
+                            <div class="phone-notch"></div>
+                            <div class="phone-screen">
+                                <div class="liff-line-header">
+                                    <div class="liff-line-title"><i class="fab fa-line"></i> MOMOMOM MASSAGER</div>
+                                    <div class="liff-line-close">×</div>
+                                </div>
+                                <div class="line-user-select-bar">
+                                    <span>LINE: <span id="massager-sim-name">หมอบี (MCA-00001)</span></span>
+                                    <button onclick="switchSimulatedMassager()" class="btn btn-secondary btn-sm" style="padding: 0.1rem 0.4rem; font-size: 0.7rem;">สลับหมอ</button>
+                                </div>
+                                
+                                <div class="liff-content" id="massager-liff-container">
+                                    <!-- View A: Registration Form (if not registered) -->
+                                    <div id="massager-register-panel" class="d-none">
+                                        <div style="text-align: center; margin-bottom: 1.5rem;">
+                                            <h4 style="color: var(--primary); font-size: 1.2rem;">สมัครเป็นหมอนวดพาร์ทเนอร์</h4>
+                                            <p style="font-size: 0.75rem; color: var(--text-muted);">กรอกประวัติเบื้องต้นเพื่อสร้างรหัสประจำตัวหมอ (MCA-xxxxx)</p>
+                                        </div>
+                                        <form onsubmit="handleMassagerRegister(event)">
+                                            <div class="form-group">
+                                                <label>ชื่อ-นามสกุลหมอนวด *</label>
+                                                <input type="text" id="m-reg-name" class="form-control form-control-sm" required placeholder="เช่น สมศรี นวดดี">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>เบอร์โทรศัพท์ *</label>
+                                                <input type="tel" id="m-reg-phone" class="form-control form-control-sm" required placeholder="เช่น 0987654321">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>โซนพื้นที่รับงาน *</label>
+                                                <select id="m-reg-zone" class="form-control form-control-sm" required>
+                                                    <option value="กรุงเทพชั้นใน (สุขุมวิท/สาทร)">กรุงเทพชั้นใน (สุขุมวิท/สาทร)</option>
+                                                    <option value="ลาดพร้าว/รามคำแหง">ลาดพร้าว/รามคำแหง</option>
+                                                    <option value="นนทบุรี/งามวงศ์วาน">นนทบุรี/งามวงศ์วาน</option>
+                                                    <option value="ฝั่งธนบุรี/ปิ่นเกล้า">ฝั่งธนบุรี/ปิ่นเกล้า</option>
+                                                </select>
+                                            </div>
+                                            <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1.5rem;">
+                                                <i class="fa-solid fa-user-check"></i> บันทึกข้อมูลและสมัคร
+                                            </button>
+                                        </form>
+                                    </div>
+
+                                    <!-- View B: Massager Dashboard (today/tomorrow jobs, summary, all jobs) -->
+                                    <div id="massager-dashboard-panel">
+                                        
+                                        <!-- Income summary card (end of month summary) -->
+                                        <div class="panel-card" style="padding: 1rem; border-color: var(--primary-soft); background-color: var(--primary-light); margin-bottom: 1rem;">
+                                            <div style="font-size: 0.75rem; color: var(--text-slate); font-weight: bold; text-transform: uppercase;">สรุปรายได้สะสมประจำเดือนนี้</div>
+                                            <div style="font-size: 1.8rem; font-weight: bold; color: var(--primary); margin: 0.2rem 0;" id="m-dash-income">฿0.00</div>
+                                            <div style="font-size: 0.7rem; color: var(--text-muted);" id="m-dash-cases-count">ทำเสร็จแล้ว 0 เคส (มีรีเควสซ้ำ 0 ครั้ง)</div>
+                                        </div>
+
+                                        <!-- Job Schedule Sections -->
+                                        <h5 style="font-size: 0.9rem; color: var(--text-dark); margin-bottom: 0.5rem;"><i class="fa-solid fa-briefcase"></i> งานนวดของคุณในวันนี้</h5>
+                                        <div id="m-today-jobs-list" style="margin-bottom: 1.5rem; display: flex; flex-direction: column; gap: 0.8rem;">
+                                            <!-- list -->
+                                        </div>
+
+                                        <h5 style="font-size: 0.9rem; color: var(--text-dark); margin-bottom: 0.5rem;"><i class="fa-solid fa-calendar-day"></i> งานนวดในวันพรุ่งนี้</h5>
+                                        <div id="m-tomorrow-jobs-list" style="margin-bottom: 1.5rem; display: flex; flex-direction: column; gap: 0.8rem;">
+                                            <!-- list -->
+                                        </div>
+
+                                        <h5 style="font-size: 0.9rem; color: var(--text-dark); margin-bottom: 0.5rem;"><i class="fa-solid fa-clock-rotate-left"></i> ตารางงานรับล่วงหน้าทั้งหมด</h5>
+                                        <div id="m-all-jobs-list" style="display: flex; flex-direction: column; gap: 0.8rem;">
+                                            <!-- list -->
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Simulated Rich Menu for Massagers (อัปเดตงาน: ถึงแล้ว, ปิดงานแล้ว) -->
+                                <div class="rich-menu-mock" id="massager-rich-menu">
+                                    <div class="rich-menu-btn" onclick="richMenuAction('arrived')">
+                                        <i class="fa-solid fa-location-dot"></i>
+                                        <span>ถึงลูกค้าแล้ว</span>
+                                    </div>
+                                    <div class="rich-menu-btn" onclick="richMenuAction('completed')">
+                                        <i class="fa-solid fa-circle-check"></i>
+                                        <span>ปิดงานนวดแล้ว</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- -------------------------------------------------------------------------
+         MODALS & DIALOGS
+         ------------------------------------------------------------------------- -->
+
+    <!-- Booking details & Action Modal -->
+    <div id="booking-detail-modal" class="modal-overlay">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3><i class="fa-solid fa-circle-info"></i> รายละเอียดเคสจองสปา</h3>
+                <button class="modal-close" onclick="closeBookingModal()">&times;</button>
+            </div>
+            <div id="booking-modal-body">
+                <!-- Filled dynamically by app.js -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Add/Edit Massager Modal -->
+    <div id="massager-form-modal" class="modal-overlay">
+        <div class="modal-box" style="max-width: 500px;">
+            <div class="modal-header">
+                <h3 id="massager-modal-title">เพิ่มประวัติหมอนวดใหม่</h3>
+                <button class="modal-close" onclick="closeMassagerModal()">&times;</button>
+            </div>
+            <form id="massager-form" onsubmit="handleMassagerFormSubmit(event)">
+                <input type="hidden" id="massager-form-line-id">
+                <input type="hidden" id="massager-form-mode" value="add">
+                
+                <div class="form-group">
+                    <label>ชื่อ-นามสกุลหมอนวด *</label>
+                    <input type="text" id="massager-form-name" class="form-control" required placeholder="เช่น หมอวรรณ นวดแก้อาการ">
+                </div>
+                <div class="form-group">
+                    <label>เบอร์โทรศัพท์ *</label>
+                    <input type="tel" id="massager-form-phone" class="form-control" required placeholder="เช่น 0812345678">
+                </div>
+                <div class="form-group">
+                    <label>พื้นที่โซนรับงาน *</label>
+                    <input type="text" id="massager-form-zone" class="form-control" required placeholder="เช่น ลาดพร้าว, สุขุมวิท, นนทบุรี">
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>คะแนนเรทติ้งระบบ (เต็ม 10) *</label>
+                        <input type="number" id="massager-form-score" class="form-control" required min="1" max="10" value="10">
+                    </div>
+                    <div class="form-group">
+                        <label>ระดับดาว (0 - 5 ดาว) *</label>
+                        <input type="number" id="massager-form-stars" class="form-control" required min="0" max="5" step="0.5" value="5">
+                    </div>
+                </div>
+                <div style="margin-top: 1.5rem; text-align: right; display: flex; gap: 0.5rem; justify-content: flex-end;">
+                    <button type="button" onclick="closeMassagerModal()" class="btn btn-secondary">ยกเลิก</button>
+                    <button type="submit" class="btn btn-primary">บันทึกข้อมูล</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add/Edit Client Modal -->
+    <div id="client-form-modal" class="modal-overlay">
+        <div class="modal-box" style="max-width: 500px;">
+            <div class="modal-header">
+                <h3 id="client-modal-title">เพิ่มประวัติลูกค้าใหม่</h3>
+                <button class="modal-close" onclick="closeClientModal()">&times;</button>
+            </div>
+            <form id="client-form" onsubmit="handleClientFormSubmit(event)">
+                <input type="hidden" id="client-form-line-id">
+                <input type="hidden" id="client-form-mode" value="add">
+                
+                <div class="form-group">
+                    <label>ชื่อ-นามสกุลลูกค้า *</label>
+                    <input type="text" id="client-form-name" class="form-control" required placeholder="เช่น คุณมุกดา สมบัติประเสริฐ">
+                </div>
+                <div class="form-group">
+                    <label>เบอร์โทรศัพท์ *</label>
+                    <input type="tel" id="client-form-phone" class="form-control" required placeholder="เช่น 0945671234">
+                </div>
+                <div class="form-group">
+                    <label>ระดับความแรงของแรงนวด</label>
+                    <select id="client-form-level" class="form-control">
+                        <option value="เบา (Light)">เบา (Light)</option>
+                        <option value="ปานกลาง (Medium)" selected>ปานกลาง (Medium)</option>
+                        <option value="หนัก (Firm)">หนัก (Firm)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>สัตว์เลี้ยงที่พักอาศัย</label>
+                    <input type="text" id="client-form-pets" class="form-control" placeholder="เช่น แมว 1 ตัว, สุนัขพันธ์เล็กเลี้ยงในกรง">
+                </div>
+                <div class="form-group">
+                    <label>ที่อยู่ในการให้บริการ *</label>
+                    <textarea id="client-form-address" class="form-control" rows="3" required placeholder="เลขที่บ้าน ถนน อำเภอ จังหวัด..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>ลิ้งแผนที่ Google Map *</label>
+                    <input type="url" id="client-form-map" class="form-control" placeholder="https://maps.app.goo.gl/..." required>
+                </div>
+                <div style="margin-top: 1.5rem; text-align: right; display: flex; gap: 0.5rem; justify-content: flex-end;">
+                    <button type="button" onclick="closeClientModal()" class="btn btn-secondary">ยกเลิก</button>
+                    <button type="submit" class="btn btn-primary">บันทึกข้อมูลลูกค้า</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- System Toasts Container (Right-Bottom notification notifications) -->
+    <div id="toast-container" class="floating-alert-list"></div>
+
+    <!-- Scripts -->
+    <script src="app.js"></script>
+    
+</body>
+</html>

@@ -6,6 +6,13 @@ const path = require("path");
 
 const app = express();
 
+
+
+app.use(express.json());
+
+app.use("/api/admin", require("./routes/admin"));
+
+
 app.use(cors());
 app.use(express.json());
 
@@ -24,6 +31,8 @@ const flexBooking = require("./messages/flexBooking");
 const TOKEN_MESSAGE = "zuorICwzxh8LvoLghb7qBykm2xyJ9BrkuP0p3QoiVIAjGKH60JoVP3UKmLVjnZQQyDM1uKJM+SQ8o+Do/2plchvzZXMliYUFh0uAuk+o65BH9yTzZXlaMrkXkEkMj+T/tgWH9qJqWIYXIJ993XWInAdB04t89/1O/w1cDnyilFU=";
 
 const TOKEN_BROADCAST = "zuorICwzxh8LvoLghb7qBykm2xyJ9BrkuP0p3QoiVIAjGKH60JoVP3UKmLVjnZQQyDM1uKJM+SQ8o+Do/2plchvzZXMliYUFh0uAuk+o65BH9yTzZXlaMrkXkEkMj+T/tgWH9qJqWIYXIJ993XWInAdB04t89/1O/w1cDnyilFU=";
+
+
 // ===============================
 // 1. ส่งข้อความธรรมดา (Push)
 // ===============================
@@ -197,9 +206,56 @@ app.post("/multicast", async (req, res)=>{
     }
 
 });
+// ===============================
+// เปลี่ยนรหัสแอดมิน
+// ===============================
 
+router.post("/change-password", async (req, res) => {
 
+    const { oldPassword, newPassword } = req.body;
 
+    const [rows] = await db.query(
+        "SELECT * FROM admins WHERE id=1"
+    );
+
+    if(rows.length === 0){
+        return res.json({
+            success:false,
+            message:"ไม่พบข้อมูล Admin"
+        });
+    }
+
+    const admin = rows[0];
+
+    const match = await bcrypt.compare(
+        oldPassword,
+        admin.password
+    );
+
+    if(!match){
+
+        return res.json({
+            success:false,
+            message:"รหัสผ่านเดิมไม่ถูกต้อง"
+        });
+
+    }
+
+    const hash = await bcrypt.hash(
+        newPassword,
+        10
+    );
+
+    await db.query(
+        "UPDATE admins SET password=? WHERE id=?",
+        [hash, admin.id]
+    );
+
+    res.json({
+        success:true
+    });
+
+});
 
 // ===============================
 // START SERVER
