@@ -1,0 +1,568 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Noto+Sans+Thai:wght@300;400;500;700&display=swap');
+
+
+*{
+    box-sizing:border-box;
+}
+
+
+body{
+
+    margin:0;
+
+    background:
+    linear-gradient(
+        180deg,
+        #fff8fb 0%,
+        #fff 100%
+    );
+
+    font-family:
+    'Noto Sans Thai',
+    sans-serif;
+
+    color:#5b4650;
+
+}
+
+
+
+.app{
+
+    padding:22px;
+
+    padding-bottom:100px;
+
+}
+
+
+
+
+/* HEADER */
+
+.header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:25px;
+
+}
+
+
+
+.profile{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:14px;
+
+}
+
+
+
+.avatar{
+
+    width:65px;
+
+    height:65px;
+
+    border-radius:50%;
+
+    border:3px solid #f5c6d5;
+
+    padding:3px;
+
+    background:white;
+
+}
+
+
+
+.profile h3{
+
+    font-family:
+    'Playfair Display';
+
+    margin:0;
+
+    font-size:22px;
+
+    color:#8d5368;
+
+}
+
+
+
+.profile p{
+
+    margin:4px 0;
+
+    font-size:13px;
+
+    color:#b58b98;
+
+}
+
+
+
+
+
+.status{
+
+    background:#fff0f5;
+
+    color:#d27a98;
+
+    padding:8px 14px;
+
+    border-radius:30px;
+
+    font-size:12px;
+
+}
+
+
+
+.status i{
+
+    font-size:8px;
+
+}
+
+
+
+
+
+/* INCOME CARD */
+
+
+.income-card{
+
+
+background:
+
+linear-gradient(
+135deg,
+#f8c9d8,
+#eaa6bf
+);
+
+
+
+border-radius:30px;
+
+
+padding:25px;
+
+
+display:flex;
+
+
+justify-content:space-between;
+
+
+align-items:center;
+
+
+color:white;
+
+
+box-shadow:
+
+0 15px 35px rgba(220,140,170,.35);
+
+
+position:relative;
+
+
+overflow:hidden;
+
+
+}
+
+
+
+.income-card::after{
+
+
+content:"";
+
+
+position:absolute;
+
+
+width:150px;
+
+height:150px;
+
+
+background:
+rgba(255,255,255,.2);
+
+
+border-radius:50%;
+
+
+right:-50px;
+
+
+top:-40px;
+
+
+}
+
+
+
+
+.income-card p{
+
+margin:0;
+
+font-size:14px;
+
+opacity:.9;
+
+}
+
+
+.income-card h1{
+
+font-family:
+'Playfair Display';
+
+
+font-size:42px;
+
+
+margin:10px 0;
+
+
+}
+
+
+
+.income-card i{
+
+font-size:55px;
+
+opacity:.8;
+
+}
+
+
+
+
+/* SECTION TITLE */
+
+
+.title{
+
+
+font-family:
+'Playfair Display';
+
+
+font-size:20px;
+
+
+color:#8d5368;
+
+
+margin:
+
+30px 0 15px;
+
+
+}
+
+
+
+/* JOB CARD */
+
+
+.job-card{
+
+
+background:white;
+
+
+border-radius:25px;
+
+
+padding:20px;
+
+
+margin-bottom:18px;
+
+
+border:
+
+1px solid #f7d9e2;
+
+
+box-shadow:
+
+0 10px 25px rgba(150,90,110,.08);
+
+
+}
+
+
+
+.job-time{
+
+
+color:#d7839d;
+
+
+font-size:22px;
+
+
+font-weight:700;
+
+
+}
+
+
+
+.job-name{
+
+
+font-size:17px;
+
+font-weight:600;
+
+
+color:#6d4a56;
+
+
+margin:
+
+8px 0;
+
+
+}
+
+
+
+.job-detail{
+
+
+line-height:2;
+
+font-size:14px;
+
+
+color:#92727c;
+
+
+}
+
+
+
+
+.job-btn{
+
+
+display:flex;
+
+gap:10px;
+
+margin-top:18px;
+
+
+}
+
+
+
+.job-btn button{
+
+
+flex:1;
+
+
+border:none;
+
+
+padding:12px;
+
+
+border-radius:18px;
+
+
+font-weight:600;
+
+
+}
+
+
+
+.job-btn button:first-child{
+
+
+background:#f7b7cb;
+
+
+color:white;
+
+
+}
+
+
+.job-btn button:last-child{
+
+
+background:#d9a441;
+
+
+color:white;
+
+
+}
+
+
+
+
+
+
+
+.empty{
+
+
+background:white;
+
+
+border-radius:25px;
+
+
+padding:35px;
+
+
+text-align:center;
+
+
+color:#c6a9b3;
+
+
+border:1px dashed #edc7d5;
+
+
+}
+
+
+
+
+
+/* BOTTOM MENU */
+
+
+.bottom{
+
+
+position:fixed;
+
+
+bottom:15px;
+
+
+left:15px;
+
+right:15px;
+
+
+height:75px;
+
+
+background:
+
+rgba(255,255,255,.9);
+
+
+backdrop-filter:
+
+blur(15px);
+
+
+border-radius:30px;
+
+
+display:flex;
+
+
+justify-content:space-around;
+
+
+align-items:center;
+
+
+box-shadow:
+
+0 15px 35px rgba(150,80,100,.18);
+
+
+}
+
+
+
+.bottom button{
+
+
+border:none;
+
+
+background:none;
+
+
+color:#c4a1ad;
+
+
+font-size:12px;
+
+
+}
+
+
+
+.bottom i{
+
+
+display:block;
+
+
+font-size:22px;
+
+
+margin-bottom:5px;
+
+
+}
+
+
+
+
+.bottom .active{
+
+
+color:#d7839d;
+
+
+}
+
+
+
+
+.bottom .active i{
+
+
+transform:
+
+translateY(-5px);
+
+
+}
