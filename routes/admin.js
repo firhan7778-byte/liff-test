@@ -5,6 +5,12 @@ const router = express.Router();
 const db = require("../db");
 
 router.post("/login", async (req, res) => {
+    
+    console.log("Method:", req.method);
+    console.log("Headers:", req.headers);
+    console.log("Body:", req.body);
+
+
 
     const { password } = req.body;
 

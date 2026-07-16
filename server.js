@@ -1,23 +1,18 @@
 const express = require("express");
 const axios = require("axios");
-
 const cors = require("cors");
 const path = require("path");
 
 const app = express();
 
-const adminRoute = require("./routes/admin");
-app.use("/api/admin", adminRoute);
-
-
-app.use(express.json());
-
+const db = require("./db");
+const bcrypt = require("bcrypt");
 app.use("/api/admin", require("./routes/admin"));
-
 
 app.use(cors());
 app.use(express.json());
-
+app.use(express.urlencoded({ extended: true }));
+app.use("/api/admin", adminRoute);
 app.use(express.static(__dirname));
 
 const userIds = [
@@ -212,7 +207,7 @@ app.post("/multicast", async (req, res)=>{
 // เปลี่ยนรหัสแอดมิน
 // ===============================
 
-router.post("/change-password", async (req, res) => {
+app.post("/api/admin/change-password", async (req, res) => {
 
     const { oldPassword, newPassword } = req.body;
 
