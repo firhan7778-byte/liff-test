@@ -1,67 +1,81 @@
 const express = require("express");
-const bcrypt = require("bcrypt");
 const router = express.Router();
+const bcrypt = require("bcrypt");
 
 const db = require("../db");
 
-router.post("/login", async (req, res) => {
 
-    console.log("Method:", req.method);
-    console.log("Headers:", req.headers);
-    console.log("Body:", req.body);
-        if (!req.body) {
-        return res.status(400).json({
-            success: false,
-            message: "req.body is undefined"
-        });
-    }
+router.post("/login", async(req,res)=>{
+
+    try{
+
+        const {password} = req.body;
 
 
-    const { password } = req.body;
-
-    try {
-
-        const [rows] = await db.query(
-            "SELECT * FROM admins LIMIT 1"
+        // ดึงรหัส admin จาก database
+        const [rows] = await db.execute(
+            `
+            SELECT *
+            FROM admins
+            LIMIT 1
+            `
         );
 
-        if (rows.length == 0) {
+
+        if(rows.length === 0){
+
             return res.json({
                 success:false,
                 message:"ไม่พบ Admin"
             });
+
         }
 
-        const admin = rows[0];
-        console.log("Password =", password);
-        console.log("Hash =", admin.password);
 
-        const match = await bcrypt.compare(
+        const admin = rows[0];
+
+
+        // ตรวจรหัส
+        const check = await bcrypt.compare(
             password,
             admin.password
         );
 
-        if(!match){
+
+        if(!check){
+
             return res.json({
                 success:false,
                 message:"รหัสผ่านไม่ถูกต้อง"
             });
+
         }
 
+
+
         res.json({
-            success:true,
-            admin:{
-                id:admin.id,
-                username:admin.username
-            }
+
+            success:true
+
         });
 
-    } catch(err){
-        console.log(err);
 
-        res.status(500).json(err);
+
+    }catch(err){
+
+        console.error(err);
+
+        res.status(500).json({
+
+            success:false,
+            message:"Server Error"
+
+        });
+
     }
 
+
 });
+
 
 module.exports = router;
