@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "client": "py -m http.server --directory src 8000",
+    "client": "py -m http.server --directory 8000",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

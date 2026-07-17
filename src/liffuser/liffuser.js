@@ -1,4 +1,4 @@
-const LIFF_ID="YOUR_LIFF_ID";
+const LIFF_ID="2010610671-KNbNbUOx";
 
 
 async function startLIFF(){
