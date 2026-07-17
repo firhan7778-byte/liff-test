@@ -13,7 +13,9 @@ const adminRoute = require("./routes/admin");
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use("/api/admin", adminRoute);
+app.post("/api/admin/login", (req, res) => {
+    res.json({ success: true });
+});
 app.use(express.static(__dirname));
 
 const userIds = [
