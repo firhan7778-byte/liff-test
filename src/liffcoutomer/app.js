@@ -1925,3 +1925,34 @@ function renderCalendar() {
 
 renderCalendar();
 ///////////////////////////////// ตารางปฏิทิน /////////////////////////////////////
+fetch("http://localhost:3000/booking", {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+
+        booking_id,
+        client_line_id,
+        massager_line_id,
+        appointment_date,
+        appointment_time,
+        service_type,
+        course_duration,
+        package_name,
+        guests_count,
+        pregnancy_weeks,
+        address,
+        google_map_link,
+        massage_level,
+        pets,
+        client_note,
+        is_repeated_request,
+        booking_status
+
+    })
+})
+.then(res => res.json())
+.then(data => {
+    console.log(data);
+});
