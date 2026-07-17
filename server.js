@@ -258,17 +258,17 @@ app.post("/api/admin/change-password", async (req, res) => {
 // ===============================
 // ส่งข้อมูลจองลูกค้า ไป Database
 // ===============================
+            app.post("/booking", async (req,res)=>{
 
-app.post("/booking", async (req, res) => {
+            const connection = await db.getConnection();
 
-    const connection = await db.getConnection();
+            try {
 
-    try {
-
-        await connection.beginTransaction();
+            await connection.beginTransaction();
 
 
-        const {
+            const {
+
             booking_id,
             client_line_id,
             client_id,
@@ -278,6 +278,7 @@ app.post("/booking", async (req, res) => {
             google_map_link,
 
             massager_line_id,
+
             appointment_date,
             appointment_time,
             service_type,
@@ -289,25 +290,44 @@ app.post("/booking", async (req, res) => {
             pets,
             client_note
 
-        } = req.body;
+            } = req.body;
 
 
 
-        // 1. บันทึกลูกค้า
-        await connection.execute(
+            // แปลงค่า massager
+
+            const finalMassagerId =
+            (
+            massager_line_id === "" ||
+            massager_line_id === "none"
+            )
+            ? null
+            : massager_line_id;
+
+
+
+            console.log("DATA:", req.body);
+
+
+
+            // INSERT CLIENT
+
+            await connection.execute(
+
             `
             INSERT INTO clients
             (
-                line_user_id,
-                client_id,
-                name,
-                phone,
-                address,
-                google_map_link,
-                massage_level,
-                pets_info,
-                notes
+            line_user_id,
+            client_id,
+            name,
+            phone,
+            address,
+            google_map_link,
+            massage_level,
+            pets_info,
+            notes
             )
+
             VALUES (?,?,?,?,?,?,?,?,?)
 
             ON DUPLICATE KEY UPDATE
@@ -315,100 +335,131 @@ app.post("/booking", async (req, res) => {
             name=?,
             phone=?,
             address=?
+
             `,
+
             [
-                client_line_id,
-                client_id,
-                name,
-                phone,
-                address,
-                google_map_link,
-                massage_level,
-                pets,
-                client_note,
 
-                name,
-                phone,
-                address
+            client_line_id,
+            client_id,
+            name,
+            phone,
+            address,
+            google_map_link,
+            massage_level,
+            pets,
+            client_note,
+
+            name,
+            phone,
+            address
+
             ]
-        );
+
+            );
 
 
 
-        // 2. บันทึกการจอง
-        await connection.execute(
+
+            // INSERT BOOKING
+
+            await connection.execute(
+
             `
             INSERT INTO bookings
             (
-                booking_id,
-                client_line_id,
-                massager_line_id,
-                appointment_date,
-                appointment_time,
-                service_type,
-                course_duration,
-                package_name,
-                guests_count,
-                pregnancy_weeks,
-                address,
-                google_map_link,
-                massage_level,
-                pets,
-                client_note,
-                is_repeated_request,
-                booking_status
+            booking_id,
+            client_line_id,
+            massager_line_id,
+            appointment_date,
+            appointment_time,
+            service_type,
+            course_duration,
+            package_name,
+            guests_count,
+            pregnancy_weeks,
+            address,
+            google_map_link,
+            massage_level,
+            pets,
+            client_note,
+            is_repeated_request,
+            booking_status
             )
+
             VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+
             `,
+
             [
-                booking_id,
-                client_line_id,
-                massager_line_id,
-                appointment_date,
-                appointment_time,
-                service_type,
-                course_duration,
-                package_name,
-                guests_count,
-                pregnancy_weeks,
-                address,
-                google_map_link,
-                massage_level,
-                pets,
-                client_note,
-                false,
-                "pending_details"
+
+            booking_id,
+            client_line_id,
+            finalMassagerId,
+
+            appointment_date,
+            appointment_time,
+
+            service_type,
+            course_duration,
+            package_name,
+
+            guests_count,
+            pregnancy_weeks,
+
+            address,
+            google_map_link,
+
+            massage_level,
+            pets,
+
+            client_note,
+
+            false,
+            "pending_details"
+
             ]
-        );
+
+            );
 
 
-        await connection.commit();
+
+            await connection.commit();
 
 
-        res.json({
+
+            res.json({
+
             success:true,
-            message:"บันทึกลูกค้าและการจองสำเร็จ"
-        });
+            message:"บันทึกสำเร็จ"
+
+            });
 
 
 
-    } catch(err){
+            }catch(err){
 
-        await connection.rollback();
 
-        console.error(err);
+            await connection.rollback();
 
-        res.status(500).json({
+            console.error(err);
+
+
+            res.status(500).json({
+
             success:false,
             message:err.message
-        });
+
+            });
 
 
-    } finally {
+            }finally{
 
-        connection.release();
 
-    }
+            connection.release();
+
+
+            }
 
 });
 // ===============================

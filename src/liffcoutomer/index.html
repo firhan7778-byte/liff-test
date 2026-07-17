@@ -308,7 +308,9 @@
 
             const bookingId = "MO" + Date.now();
             const clientId = "CL" + Math.floor(Math.random()*900000);
-
+            const massagerValue =
+                document.getElementById("liff-booking-request-massager")
+                .value.trim();
             const bookingData = {
 
                 // ===== clients =====
@@ -328,7 +330,9 @@
                 booking_id: bookingId,
 
                massager_line_id:
-                document.getElementById("liff-booking-request-massager").value.trim() || null,
+                (massagerValue === "" || massagerValue === "none")
+                ? null
+                : massagerValue,
 
                 appointment_date:
                 document.getElementById("liff-booking-date").value.trim(),
