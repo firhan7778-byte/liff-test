@@ -273,6 +273,7 @@ async function loginWithPasscode() {
         const res = await fetch("https://extruding-flashback-unblended.ngrok-free.dev/api/admin/login",{
 
             method:"POST",
+            credentials:"include"
 
             headers:{
                 "Content-Type":"application/json"

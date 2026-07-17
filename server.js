@@ -1,4 +1,5 @@
 const express = require("express");
+const session = require("express-session");
 const axios = require("axios");
 const cors = require("cors");
 const path = require("path");
@@ -12,6 +13,20 @@ const adminRoute = require("./routes/admin");
 
 app.use(cors());
 app.use(express.json());
+app.use(session({
+
+    secret: "admin-secret-key",
+
+    resave: false,
+
+    saveUninitialized: false,
+
+    cookie:{
+        maxAge: 1000 * 60 * 60, // 1 ชั่วโมง
+        httpOnly:true
+    }
+
+}));
 app.use(express.urlencoded({ extended: true }));
 app.use("/api/admin", adminRoute);
 

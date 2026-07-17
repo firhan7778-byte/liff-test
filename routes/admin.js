@@ -12,7 +12,6 @@ router.post("/login", async(req,res)=>{
         const {password} = req.body;
 
 
-        // ดึงรหัส admin จาก database
         const [rows] = await db.execute(
             `
             SELECT *
@@ -35,7 +34,6 @@ router.post("/login", async(req,res)=>{
         const admin = rows[0];
 
 
-        // ตรวจรหัส
         const check = await bcrypt.compare(
             password,
             admin.password
@@ -52,13 +50,21 @@ router.post("/login", async(req,res)=>{
         }
 
 
+        // สร้าง Session
+        req.session.admin = {
+
+            id: admin.id,
+            username: admin.username,
+            login:true
+
+        };
+
 
         res.json({
 
             success:true
 
         });
-
 
 
     }catch(err){
@@ -74,8 +80,43 @@ router.post("/login", async(req,res)=>{
 
     }
 
+});
+
+
+
+// =====================
+// ตรวจสอบ Session
+// =====================
+router.get("/check",(req,res)=>{
+
+
+    console.log(req.session);
+
+
+    if(req.session.admin){
+
+
+        return res.json({
+
+            success:true,
+
+            admin:req.session.admin
+
+        });
+
+
+    }
+
+
+    res.json({
+
+        success:false
+
+    });
+
 
 });
+
 
 
 module.exports = router;

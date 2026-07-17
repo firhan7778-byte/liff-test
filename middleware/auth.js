@@ -1,31 +1,21 @@
-const jwt = require("jsonwebtoken");
+module.exports = function(req,res,next){
 
-module.exports=(req,res,next)=>{
-
-    const token=req.cookies.token;
-
-    if(!token){
-
-        return res.status(401).json({
-            message:"Unauthorized"
-        });
-
-    }
-
-    try{
-
-        const user=jwt.verify(token,process.env.JWT_SECRET);
-
-        req.user=user;
+    if(
+        req.session.admin &&
+        req.session.admin.login
+    ){
 
         next();
 
-    }catch{
+    }else{
 
         res.status(401).json({
-            message:"Token Expired"
+
+            success:false,
+            message:"กรุณา Login"
+
         });
 
     }
 
-}
+};
