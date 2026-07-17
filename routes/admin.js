@@ -64,7 +64,19 @@ router.get("/profile", async(req,res)=>{
         `,
         [adminId]
     );
+    
+if(data.success){
 
+    alert("เข้าสู่ระบบสำเร็จ");
+
+    document
+    .getElementById("admin-login-overlay")
+    .classList.remove("active");
+
+
+    loadAdminProfile();
+
+}
 
     res.json({
         success:true,

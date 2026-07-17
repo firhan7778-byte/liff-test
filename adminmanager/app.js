@@ -317,26 +317,43 @@ async function loginWithPasscode() {
 }
 async function loadAdminProfile(){
 
-    const res = await fetch(
-        "https://extruding-flashback-unblended.ngrok-free.dev/api/admin/profile",
-        {
-            credentials:"include"
+    try{
+
+        const res = await fetch(
+            "https://extruding-flashback-unblended.ngrok-free.dev/api/admin/profile",
+            {
+                method:"GET",
+                credentials:"include"
+            }
+        );
+
+
+        const data = await res.json();
+
+
+        if(data.success){
+
+            document.getElementById("active-admin-name").textContent =
+                data.admin.username;
+
+        }else{
+
+            document.getElementById("active-admin-name").textContent =
+                "Guest";
+
         }
-    );
-
-    const data = await res.json();
 
 
-    if(data.success){
+    }catch(err){
+
+        console.error(err);
 
         document.getElementById("active-admin-name").textContent =
-            data.admin.username;
+            "Guest";
 
     }
 
 }
-
-loadAdminProfile();
 
 function loginWithLineMock() {
     currentAdminName = 'แอดมินปทุมวัน (LINE OA)';
