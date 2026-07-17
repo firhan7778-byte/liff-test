@@ -327,8 +327,8 @@
                 // ===== bookings =====
                 booking_id: bookingId,
 
-                massager_line_id:
-                document.getElementById("liff-booking-request-massager").value.trim(),
+               massager_line_id:
+                document.getElementById("liff-booking-request-massager").value.trim() || null,
 
                 appointment_date:
                 document.getElementById("liff-booking-date").value.trim(),
