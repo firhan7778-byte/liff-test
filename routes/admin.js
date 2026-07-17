@@ -20,6 +20,19 @@ router.post("/login", async(req,res)=>{
             `
         );
 
+         // ดึงข้อมูลจาก Database
+        const [rows] = await db.execute(
+            `
+            SELECT 
+                id,
+                username                       
+            FROM admins
+            WHERE id = ?
+            `,
+            [adminId]
+        );
+
+
 
         if(rows.length === 0){
 
