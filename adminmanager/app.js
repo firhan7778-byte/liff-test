@@ -264,32 +264,52 @@ function initSystem() {
 // =========================================================================
 async function loginWithPasscode() {
 
-    const password =
-        document.getElementById("admin-passcode-input").value;
+    try {
 
-    const res = await fetch("/api/admin/login",{
-        method:"POST",
-        headers:{
-            "Content-Type":"application/json"
-        },
-        body:JSON.stringify({
-            password:password
-        })
-    });
+        const password =
+            document.getElementById("admin-passcode-input").value.trim();
 
-    const data = await res.json();
 
-    if(data.success){
+        const res = await fetch("https://extruding-flashback-unblended.ngrok-free.dev/api/admin/login",{
 
-        alert("เข้าสู่ระบบสำเร็จ");
+            method:"POST",
 
-        document
+            headers:{
+                "Content-Type":"application/json"
+            },
+
+            body:JSON.stringify({
+                password
+            })
+
+        });
+
+
+        const data = await res.json();
+
+
+        if(data.success){
+
+            alert("เข้าสู่ระบบสำเร็จ");
+
+
+            document
             .getElementById("admin-login-overlay")
             .classList.remove("active");
 
-    }else{
 
-        alert(data.message);
+        }else{
+
+            alert(data.message);
+
+        }
+
+
+    }catch(err){
+
+        console.error(err);
+
+        alert("ไม่สามารถเชื่อมต่อ Server ได้");
 
     }
 
