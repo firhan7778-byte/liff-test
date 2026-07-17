@@ -260,13 +260,23 @@ app.post("/api/admin/change-password", async (req, res) => {
 // ===============================
 
 app.post("/booking", async (req, res) => {
+
+    const connection = await db.getConnection();
+
     try {
 
-        console.log(req.body);
+        await connection.beginTransaction();
+
 
         const {
             booking_id,
             client_line_id,
+            client_id,
+            name,
+            phone,
+            address,
+            google_map_link,
+
             massager_line_id,
             appointment_date,
             appointment_time,
@@ -275,17 +285,61 @@ app.post("/booking", async (req, res) => {
             package_name,
             guests_count,
             pregnancy_weeks,
-            address,
-            google_map_link,
             massage_level,
             pets,
-            client_note,
-            is_repeated_request,
-            booking_status
+            client_note
+
         } = req.body;
 
-        const sql = `
-            INSERT INTO bookings (
+
+
+        // 1. บันทึกลูกค้า
+        await connection.execute(
+            `
+            INSERT INTO clients
+            (
+                line_user_id,
+                client_id,
+                name,
+                phone,
+                address,
+                google_map_link,
+                massage_level,
+                pets_info,
+                notes
+            )
+            VALUES (?,?,?,?,?,?,?,?,?)
+
+            ON DUPLICATE KEY UPDATE
+
+            name=?,
+            phone=?,
+            address=?
+            `,
+            [
+                client_line_id,
+                client_id,
+                name,
+                phone,
+                address,
+                google_map_link,
+                massage_level,
+                pets,
+                client_note,
+
+                name,
+                phone,
+                address
+            ]
+        );
+
+
+
+        // 2. บันทึกการจอง
+        await connection.execute(
+            `
+            INSERT INTO bookings
+            (
                 booking_id,
                 client_line_id,
                 massager_line_id,
@@ -305,41 +359,57 @@ app.post("/booking", async (req, res) => {
                 booking_status
             )
             VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
-        `;
+            `,
+            [
+                booking_id,
+                client_line_id,
+                massager_line_id,
+                appointment_date,
+                appointment_time,
+                service_type,
+                course_duration,
+                package_name,
+                guests_count,
+                pregnancy_weeks,
+                address,
+                google_map_link,
+                massage_level,
+                pets,
+                client_note,
+                false,
+                "pending_details"
+            ]
+        );
 
-        const [result] = await db.execute(sql, [
-            booking_id,
-            client_line_id,
-            massager_line_id,
-            appointment_date,
-            appointment_time,
-            service_type,
-            course_duration,
-            package_name,
-            guests_count,
-            pregnancy_weeks,
-            address,
-            google_map_link,
-            massage_level,
-            pets,
-            client_note,
-            is_repeated_request,
-            booking_status
-        ]);
 
-        console.log(result);
+        await connection.commit();
+
 
         res.json({
-            success: true
+            success:true,
+            message:"บันทึกลูกค้าและการจองสำเร็จ"
         });
 
-    } catch (err) {
+
+
+    } catch(err){
+
+        await connection.rollback();
+
         console.error(err);
+
         res.status(500).json({
-            success: false,
-            message: err.message
+            success:false,
+            message:err.message
         });
+
+
+    } finally {
+
+        connection.release();
+
     }
+
 });
 // ===============================
 // START SERVER
