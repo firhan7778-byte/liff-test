@@ -259,16 +259,10 @@ app.post("/api/admin/change-password", async (req, res) => {
 // ส่งข้อมูลจองลูกค้า ไป Database
 // ===============================
             app.post("/booking", async (req,res)=>{
-
             const connection = await db.getConnection();
-
             try {
-
             await connection.beginTransaction();
-
-
             const {
-
             booking_id,
             client_line_id,
             client_id,
@@ -289,33 +283,19 @@ app.post("/api/admin/change-password", async (req, res) => {
             massage_level,
             pets,
             client_note
-
             } = req.body;
-
-
-
             // แปลงค่า massager
-
             const finalMassagerId =
             (
-            massager_line_id === "" ||
-            massager_line_id === "none"
+                massager_line_id === "" ||
+                massager_line_id === "none"
             )
             ? null
             : massager_line_id;
-
-
-
             console.log("DATA:", req.body);
-
-
-
             // INSERT CLIENT
-
             await connection.execute(
-
-            `
-            INSERT INTO clients
+            ` INSERT INTO clients
             (
             line_user_id,
             client_id,
