@@ -388,7 +388,11 @@
             );
 
 
-            return await res.json();
+            const data = await res.json();
+
+            console.log("Booking API Response:", data);
+
+            return data;
 
         }
 
