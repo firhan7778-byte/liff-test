@@ -4,12 +4,15 @@ const bcrypt = require("bcrypt");
 
 const db = require("../db");
 
+
 router.post("/login", async(req,res)=>{
 
-    const {password}=req.body;
+    try{
+
+        const {password} = req.body;
 
 
-    const [adminRows] = await db.execute(
+         const [adminRows] = await db.execute(
         `
         SELECT *
         FROM admins
@@ -20,71 +23,81 @@ router.post("/login", async(req,res)=>{
 
     const admin = adminRows[0];
 
+         // ดึงข้อมูลจาก Database
+        const [rows] = await db.execute(
+            `
+            SELECT 
+                id,
+                username                       
+            FROM admins
+            WHERE id = ?
+            `,
+            [adminId]
+        );
 
-    const check = await bcrypt.compare(
-        password,
-        admin.password
-    );
 
 
-    if(!check){
-        return res.json({
-            success:false,
-            message:"รหัสผ่านไม่ถูกต้อง"
+        if(rows.length === 0){
+
+            return res.json({
+                success:false,
+                message:"ไม่พบ Admin"
+            });
+
+        }
+
+
+        const admin = rows[0];
+
+
+        const check = await bcrypt.compare(
+            password,
+            admin.password
+        );
+
+
+        if(!check){
+
+            return res.json({
+                success:false,
+                message:"รหัสผ่านไม่ถูกต้อง"
+            });
+
+        }
+
+
+        // สร้าง Session
+        req.session.admin = {
+
+            id: admin.id,
+            username: admin.username,
+            login:true
+
+        };
+
+
+        res.json({
+
+            success:true
+
         });
+
+
+    }catch(err){
+
+        console.error(err);
+
+        res.status(500).json({
+
+            success:false,
+            message:"Server Error"
+
+        });
+
     }
 
-
-    req.session.admin = {
-        id:admin.id,
-        username:admin.username,
-        login:true
-    };
-
-
-    res.json({
-        success:true
-    });
-
 });
 
-
-
-router.get("/profile", async(req,res)=>{
-
-
-    const adminId = req.session.admin.id;
-
-
-    const [profileRows] = await db.execute(
-        `
-        SELECT id,username
-        FROM admins
-        WHERE id=?
-        `,
-        [adminId]
-    );
-    
-if(data.success){
-
-    alert("เข้าสู่ระบบสำเร็จ");
-
-    document
-    .getElementById("admin-login-overlay")
-    .classList.remove("active");
-
-
-    loadAdminProfile();
-
-}
-
-    res.json({
-        success:true,
-        admin:profileRows[0]
-    });
-
-
-});
 
 
 // =====================

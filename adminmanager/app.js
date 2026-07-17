@@ -315,6 +315,20 @@ async function loginWithPasscode() {
     }
 
 }
+
+if(data.success){
+
+    alert("เข้าสู่ระบบสำเร็จ");
+
+    document
+    .getElementById("admin-login-overlay")
+    .classList.remove("active");
+
+
+    loadAdminProfile();
+
+}
+
 async function loadAdminProfile(){
 
     try{
