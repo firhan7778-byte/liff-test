@@ -267,7 +267,7 @@ async function loginWithPasscode() {
     const password =
         document.getElementById("admin-passcode-input").value;
 
-    const res = await fetch("/routes/admin",{
+    const res = await fetch("/api/admin/login",{
         method:"POST",
         headers:{
             "Content-Type":"application/json"
