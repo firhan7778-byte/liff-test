@@ -259,30 +259,12 @@ app.post("/api/admin/change-password", async (req, res) => {
 // ส่งข้อมูลจองลูกค้า ไป Database
 // ===============================
 
-app.post("/booking", (req, res) => {
+app.post("/booking", async (req, res) => {
+    try {
 
-    const {
-        booking_id,
-        client_line_id,
-        massager_line_id,
-        appointment_date,
-        appointment_time,
-        service_type,
-        course_duration,
-        package_name,
-        guests_count,
-        pregnancy_weeks,
-        address,
-        google_map_link,
-        massage_level,
-        pets,
-        client_note,
-        is_repeated_request,
-        booking_status
-    } = req.body;
+        console.log(req.body);
 
-    const sql = `
-        INSERT INTO bookings (
+        const {
             booking_id,
             client_line_id,
             massager_line_id,
@@ -300,47 +282,65 @@ app.post("/booking", (req, res) => {
             client_note,
             is_repeated_request,
             booking_status
-        )
-        VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
-    `;
+        } = req.body;
 
-    db.query(sql, [
-        booking_id,
-        client_line_id,
-        massager_line_id,
-        appointment_date,
-        appointment_time,
-        service_type,
-        course_duration,
-        package_name,
-        guests_count,
-        pregnancy_weeks,
-        address,
-        google_map_link,
-        massage_level,
-        pets,
-        client_note,
-        is_repeated_request,
-        booking_status
-    ], (err, result) => {
+        const sql = `
+            INSERT INTO bookings (
+                booking_id,
+                client_line_id,
+                massager_line_id,
+                appointment_date,
+                appointment_time,
+                service_type,
+                course_duration,
+                package_name,
+                guests_count,
+                pregnancy_weeks,
+                address,
+                google_map_link,
+                massage_level,
+                pets,
+                client_note,
+                is_repeated_request,
+                booking_status
+            )
+            VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+        `;
 
-        if (err) {
-            console.log(err);
-            return res.status(500).json({
-                success: false,
-                message: err.message
-            });
-        }
+        const [result] = await db.execute(sql, [
+            booking_id,
+            client_line_id,
+            massager_line_id,
+            appointment_date,
+            appointment_time,
+            service_type,
+            course_duration,
+            package_name,
+            guests_count,
+            pregnancy_weeks,
+            address,
+            google_map_link,
+            massage_level,
+            pets,
+            client_note,
+            is_repeated_request,
+            booking_status
+        ]);
+
+        console.log(result);
 
         res.json({
-            success: true,
-            message: "บันทึกสำเร็จ"
+            success: true
         });
 
-    });
-
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({
+            success: false,
+            message: err.message
+        });
+    }
 });
-
 // ===============================
 // START SERVER
 // ===============================

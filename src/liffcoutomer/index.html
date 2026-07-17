@@ -223,10 +223,6 @@
 
       async function send() {
             const to = document.getElementById("lineUserIdtext").value.trim();
-
-
-
-            
             const name = document.getElementById("liff-client-name").value.trim();
             const phone = document.getElementById("liff-client-phone").value.trim();
             const date = document.getElementById("liff-booking-date").value.trim();
@@ -243,6 +239,13 @@
             const massager = document.getElementById("liff-booking-request-massager").value.trim();
             const note = document.getElementById("liff-client-note").value.trim();
            
+             const result = await saveBooking();
+
+            if (!result.success) {
+                alert("บันทึกข้อมูลไม่สำเร็จ");
+                return;
+            }
+
 
 
 
@@ -267,12 +270,6 @@
             "สัตว์เลี้ยง: " + pets + "\n" +
             "ระบุเจาะจงหมอ: " + massager + "\n" +
            "หมายเหตุลูกค้า: " + note;
-
-
-
-
-
-
 
             if (!to || !message) {
                 alert("กรุณากรอก User ID และข้อความ");
@@ -306,6 +303,44 @@
                 alert("ไม่สามารถเชื่อมต่อ Server ได้");
             }
         }
+
+        async function saveBooking() {
+            const bookingId = "MO" + Date.now();
+      const bookingData = {
+        booking_id: bookingId,
+        client_line_id: document.getElementById("lineUserIdtext").value.trim(),
+        massager_line_id: document.getElementById("liff-booking-request-massager").value.trim(),
+
+        appointment_date: document.getElementById("liff-booking-date").value.trim(),
+        appointment_time: document.getElementById("liff-booking-time").value.trim(),
+
+        service_type: document.getElementById("liff-booking-service").value.trim(),
+        course_duration: document.getElementById("liff-booking-duration").value.trim(),
+        package_name: document.getElementById("liff-booking-package").value.trim(),
+
+        guests_count: Number(document.getElementById("liff-booking-guests").value),
+        pregnancy_weeks: Number(document.getElementById("liff-pregnancy-weeks").value),
+
+        address: document.getElementById("liff-client-address").value.trim(),
+        google_map_link: document.getElementById("liff-client-map").value.trim(),
+        massage_level: document.getElementById("liff-booking-level").value.trim(),
+        pets: document.getElementById("liff-client-pets").value.trim(),
+        client_note: document.getElementById("liff-client-note").value.trim(),
+
+        is_repeated_request: false,
+        booking_status: "pending_details"
+    };
+
+    const res = await fetch("https://extruding-flashback-unblended.ngrok-free.dev/booking", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(bookingData)
+    });
+
+    return await res.json();
+}
 
 
 
