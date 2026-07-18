@@ -9,8 +9,375 @@
         padding: 10px;
         background: #ddd;
       }
+
+
+
+      /* ===========================
+   MOMOMOM WELLNESS
+   Modern Pastel Pink Theme
+=========================== */
+
+:root{
+    --primary:#ec6aa8;
+    --primary-light:#ffd9ea;
+    --primary-dark:#d94b8d;
+
+    --bg:#fff8fb;
+    --card:#ffffff;
+
+    --text:#4b4453;
+    --text-muted:#8b8791;
+
+    --border:#f4d5e3;
+    --shadow:0 15px 40px rgba(236,106,168,.12);
+
+    --radius:18px;
+}
+
+
+/* Background */
+
+body{
+    background:
+        radial-gradient(circle at top left,#ffe7f2 0%,transparent 40%),
+        radial-gradient(circle at bottom right,#ffeef6 0%,transparent 45%),
+        #fff8fb;
+    font-family:"Kanit",sans-serif;
+}
+
+
+/* Container */
+
+.liff-content{
+    max-width:750px;
+    margin:40px auto;
+    padding:25px;
+}
+
+
+/* Card */
+
+#client-booking-form-panel{
+
+    background:white;
+    border-radius:28px;
+
+    padding:35px;
+
+    box-shadow:var(--shadow);
+
+    border:1px solid #ffe0ee;
+
+    position:relative;
+    overflow:hidden;
+}
+
+#client-booking-form-panel::before{
+
+    content:"";
+
+    position:absolute;
+
+    top:-120px;
+    right:-120px;
+
+    width:260px;
+    height:260px;
+
+    background:linear-gradient(135deg,#ffd7ea,#ffc4dd);
+
+    border-radius:50%;
+
+    opacity:.45;
+}
+
+#client-booking-form-panel::after{
+
+    content:"";
+
+    position:absolute;
+
+    bottom:-90px;
+    left:-90px;
+
+    width:180px;
+    height:180px;
+
+    background:#ffeef6;
+
+    border-radius:50%;
+}
+
+
+/* Heading */
+
+#client-booking-form-panel h3{
+
+    color:var(--primary-dark);
+
+    font-weight:700;
+
+    letter-spacing:1px;
+
+    margin-bottom:5px;
+}
+
+#client-booking-form-panel h4{
+
+    color:var(--primary);
+
+    font-weight:600;
+}
+
+#client-booking-form-panel p{
+
+    color:var(--text-muted);
+}
+
+
+/* Profile */
+
+#lineprofile{
+
+    background:#fff5fa;
+
+    border:1px solid #ffd8e9;
+
+    border-radius:18px;
+
+    padding:15px;
+
+    margin-bottom:20px;
+}
+
+#lineprofile img{
+
+    border-radius:50%;
+
+    border:5px solid white;
+
+    box-shadow:0 8px 20px rgba(0,0,0,.08);
+}
+
+
+/* Form */
+
+.form-group{
+
+    margin-bottom:18px;
+}
+
+.form-group label{
+
+    display:block;
+
+    margin-bottom:8px;
+
+    color:var(--text);
+
+    font-weight:600;
+
+    font-size:.92rem;
+}
+
+.form-row{
+
+    display:flex;
+
+    gap:15px;
+}
+
+.form-row .form-group{
+
+    flex:1;
+}
+
+
+/* Inputs */
+
+.form-control,
+.form-control-date{
+
+    width:100%;
+
+    padding:13px 16px;
+
+    border-radius:14px;
+
+    border:2px solid var(--border);
+
+    background:#fff;
+
+    font-size:.92rem;
+
+    transition:.3s;
+
+    outline:none;
+}
+
+textarea.form-control{
+
+    resize:vertical;
+}
+
+.form-control:hover,
+.form-control-date:hover{
+
+    border-color:#f5b4d0;
+}
+
+.form-control:focus,
+.form-control-date:focus{
+
+    border-color:var(--primary);
+
+    box-shadow:0 0 0 5px rgba(236,106,168,.15);
+
+    background:white;
+}
+
+
+/* Select */
+
+select.form-control{
+
+    cursor:pointer;
+}
+
+
+/* Radio */
+
+input[type=radio]{
+
+    accent-color:var(--primary);
+
+    transform:scale(1.1);
+
+    margin-right:5px;
+}
+
+
+/* Pregnancy */
+
+#pregnancy-weeks-group{
+
+    background:#fff5f9;
+
+    border-left:4px solid var(--primary);
+
+    padding:15px;
+
+    border-radius:14px;
+}
+
+
+/* Special Massager */
+
+#liff-booking-request-massager{
+
+    border:2px solid #ffcf5f !important;
+
+    background:#fffdf6;
+}
+
+
+/* Button */
+
+.btn{
+
+    width:100%;
+
+    border:none;
+
+    border-radius:16px;
+
+    padding:15px;
+
+    font-size:1rem;
+
+    font-weight:700;
+
+    cursor:pointer;
+
+    transition:.35s;
+}
+
+.btn-secondary{
+
+    background:linear-gradient(
+        135deg,
+        #ff84b8,
+        #ec6aa8
+    );
+
+    color:white;
+
+    box-shadow:
+    0 12px 30px rgba(236,106,168,.28);
+}
+
+.btn-secondary:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:
+    0 18px 35px rgba(236,106,168,.35);
+}
+
+.btn-secondary:active{
+
+    transform:scale(.98);
+}
+
+
+/* Small text */
+
+small,
+.form-group div{
+
+    color:var(--text-muted);
+}
+
+
+/* Scroll */
+
+::-webkit-scrollbar{
+
+    width:8px;
+}
+
+::-webkit-scrollbar-thumb{
+
+    background:#f8b9d3;
+
+    border-radius:50px;
+}
+
+
+/* Responsive */
+
+@media(max-width:768px){
+
+    .liff-content{
+
+        padding:12px;
+    }
+
+    #client-booking-form-panel{
+
+        padding:22px;
+        border-radius:22px;
+    }
+
+    .form-row{
+
+        flex-direction:column;
+        gap:0;
+    }
+
+}
     </style>
-    <link rel="stylesheet" href="index.css">
+    <!-- <link rel="stylesheet" href="index.css">-->
   </head>
   <body>
                       
