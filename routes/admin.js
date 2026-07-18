@@ -11,43 +11,23 @@ router.post("/login", async(req,res)=>{
 
         const {password} = req.body;
 
+                    const [rows] = await db.execute(`
+                SELECT
+                    id,
+                    username,
+                    password
+                FROM admins
+                LIMIT 1
+                `);
 
-         const [adminRows] = await db.execute(
-        `
-        SELECT *
-        FROM admins
-        LIMIT 1
-        `
-    );
+                if (rows.length === 0) {
+                    return res.json({
+                        success: false,
+                        message: "ไม่พบ Admin"
+                    });
+                }
 
-
-    const admin = adminRows[0];
-
-         // ดึงข้อมูลจาก Database
-        const [rows] = await db.execute(
-            `
-            SELECT 
-                id,
-                username                       
-            FROM admins
-            WHERE id = ?
-            `,
-            [adminId]
-        );
-
-
-
-        if(rows.length === 0){
-
-            return res.json({
-                success:false,
-                message:"ไม่พบ Admin"
-            });
-
-        }
-
-
-        const admin = rows[0];
+    const admin = rows[0];
 
 
         const check = await bcrypt.compare(

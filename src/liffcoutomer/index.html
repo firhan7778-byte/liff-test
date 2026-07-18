@@ -68,11 +68,18 @@
                                             </div>
 
                                             <div class="form-group">
-                                                <label>บริการนวด *</label>
+                                                <label>บริการ</label>
                                                 <select id="liff-booking-service" class="form-control form-control-sm" onchange="updateLiffPackages()">
-                                                    <option value="นวดอโรมา">นวดน้ำมันอโรมา (Aroma Massage)</option>
-                                                    <option value="นวดไทยโบราณ">นวดไทยโบราณ (Thai Traditional)</option>
-                                                    <option value="นวดสปาครรภ์">นวดคุณแม่ตั้งครรภ์ (Pregnancy Spa)</option>
+                                                    <option value="นวดผ่อนคลาย (ไม่ใช่น้ำมัน)">นวดผ่อนคลาย (ไม่ใช่น้ำมัน)</option>
+                                                    <option value="นวดผ่อนคลาย (ไม่ใช่น้ำมัน) + ประคบสมุนไพร (อัพเกรด 395.-/ครั้ง)">นวดผ่อนคลาย (ไม่ใช่น้ำมัน) + ประคบสมุนไพร (อัพเกรด 395.-/ครั้ง)</option>
+                                                    <option value="นวดน้ำมันผ่อนคลาย (อัพเกรดฟรี)">นวดน้ำมันผ่อนคลาย (อัพเกรดฟรี)</option>
+                                                    <option value="นวดน้ำมันผ่อนคลาย + ประคบสมุนไพร (อัพเกรด 395.-/ครั้ง)">นวดน้ำมันผ่อนคลาย + ประคบสมุนไพร (อัพเกรด 395.-/ครั้ง)</option>                                                    
+                                                    <option value="อยู่ไฟ ฟื้นฟูหลังคลอด (แจ้งจำนวนที่แอดมิน)">อยู่ไฟ ฟื้นฟูหลังคลอด (แจ้งจำนวนที่แอดมิน)</option>
+                                                    <option value="นวดกระตุ้น เปิดท่อน้ำนม">นวดกระตุ้น เปิดท่อน้ำนม</option>
+                                                    <option value="นวดไทย (บุคคลทั่วไป)">นวดไทย (บุคคลทั่วไป)</option>
+                                                    <option value="นวดไทยออยน้ำมัน (บุคคลทั่วไป)">นวดไทยออยน้ำมัน (บุคคลทั่วไป)</option>
+                                                    <option value="นวดไทย + ผสานประคบสมุนไพร (อัพเกรด 395.-/ครั้ง)(บุคคลทั่วไป)">นวดไทย + ผสานประคบสมุนไพร (อัพเกรด 395.-/ครั้ง)(บุคคลทั่วไป)</option>
+                                                    <option value="นวดไทยออยน้ำมัน + ผสานประคบสมุนไพร (อัพเกรด 395.-/ครั้ง)(บุคคลทั่วไป)">นวดไทยออยน้ำมัน + ผสานประคบสมุนไพร (อัพเกรด 395.-/ครั้ง)(บุคคลทั่วไป)</option>
                                                 </select>
                                             </div>
 
@@ -80,9 +87,10 @@
                                                 <div class="form-group">
                                                     <label>เวลาคอร์ส *</label>
                                                     <select id="liff-booking-duration" class="form-control form-control-sm">
-                                                        <option value="60 นาที">60 นาที (1 ชม.)</option>
-                                                        <option value="90 นาที">90 นาที (1.5 ชม.)</option>
-                                                        <option value="120 นาที">120 นาที (2 ชม.)</option>
+                                                        <option value="60 นาที (1 ชม.)">60 นาที (1 ชม.)</option>
+                                                        <option value="90 นาที (1.5 ชม.)">90 นาที (1.5 ชม.)</option>
+                                                        <option value="120 นาที (2 ชม.)">120 นาที (2 ชม.)</option>
+                                                        <option value="180 นาที (3 ชม.)">180 นาที (3 ชม.)</option>
                                                     </select>
                                                 </div>
                                                 <div class="form-group">
@@ -98,7 +106,12 @@
                                             <div class="form-group">
                                                 <label>แพ็คเกจ/คอร์ส *</label>
                                                 <select id="liff-booking-package" class="form-control form-control-sm">
-                                                    <option value="1">1 ท่าน</option>
+                                                    <option value="1 ครั้ง">1 ครั้ง</option>
+                                                    <option value="แพ็คเกจโปรฯ 3 ครั้ง">แพ็คเกจโปรฯ 3 ครั้ง</option>
+                                                    <option value="แพ็คเกจโปรฯ 5 ครั้ง">แพ็คเกจโปรฯ 5 ครั้ง</option>
+                                                    <option value="แพ็คเกจโปรฯ 7 ครั้ง">แพ็คเกจโปรฯ 7 ครั้ง</option>
+                                                    <option value="อื่นๆ (แจ้งแอดมิน)/อยู่ไฟ แจ้งจำนวนวัน">อื่นๆ (แจ้งแอดมิน)/อยู่ไฟ แจ้งจำนวนวัน</option>
+                                                
                                                 </select>
                                             </div>
 
@@ -130,11 +143,11 @@
                                                 <div class="form-group">
                                                     <label>ระดับน้ำหนักแรงนวด</label>
                                                     <select id="liff-booking-level" class="form-control form-control-sm">
-                                                        <option value="เบา ">เบา </option>
-                                                        <option value="เบาค่อนกลาง">เบาค่อนกลาง</option>
+                                                        <option value="เบามาก ">เบามาก </option>
+                                                        <option value="เบา">เบา</option>
                                                         <option value="ปานกลาง " selected>ปานกลาง</option>
-                                                        <option value="กลางค่อนหนัก " selected>กลางค่อนหนัก</option>
-                                                        <option value="หนัก ">หนัก</option>
+                                                        <option value="หนัก " selected>หนัก</option>
+                                                        <option value="หนักมาก/เฉพาะจุด ">หนักมาก/เฉพาะจุด</option>
                                                     </select>
                                                 </div>
                                                 <div class="form-group">
