@@ -10,372 +10,298 @@
         background: #ddd;
       }
 
-
-
-      /* ===========================
-   MOMOMOM WELLNESS
-   Modern Pastel Pink Theme
+        /* ===========================
+   LUXURY GLASS PINK THEME
 =========================== */
 
 :root{
-    --primary:#ec6aa8;
-    --primary-light:#ffd9ea;
-    --primary-dark:#d94b8d;
-
-    --bg:#fff8fb;
-    --card:#ffffff;
-
-    --text:#4b4453;
-    --text-muted:#8b8791;
-
-    --border:#f4d5e3;
-    --shadow:0 15px 40px rgba(236,106,168,.12);
-
-    --radius:18px;
+    --primary:#ff5f9e;
+    --secondary:#ffc7dc;
+    --light:#fff8fb;
+    --glass:rgba(255,255,255,.30);
+    --border:rgba(255,255,255,.55);
+    --text:#4b3042;
+    --shadow:0 20px 45px rgba(255,105,180,.18);
 }
-
-
-/* Background */
 
 body{
     background:
-        radial-gradient(circle at top left,#ffe7f2 0%,transparent 40%),
-        radial-gradient(circle at bottom right,#ffeef6 0%,transparent 45%),
-        #fff8fb;
-    font-family:"Kanit",sans-serif;
+        radial-gradient(circle at top left,#ffd9eb 0%,transparent 35%),
+        radial-gradient(circle at bottom right,#ffeaf3 0%,transparent 35%),
+        linear-gradient(135deg,#fff8fb,#ffe8f1,#fff5fa);
+    background-attachment:fixed;
+    font-family:'Prompt',sans-serif;
+    color:var(--text);
 }
 
 
-/* Container */
-
+/* กล่องหลัก */
 .liff-content{
     max-width:750px;
     margin:40px auto;
-    padding:25px;
-}
-
-
-/* Card */
-
-#client-booking-form-panel{
-
-    background:white;
-    border-radius:28px;
-
     padding:35px;
 
-    box-shadow:var(--shadow);
+    background:var(--glass);
+    backdrop-filter:blur(22px);
+    -webkit-backdrop-filter:blur(22px);
 
-    border:1px solid #ffe0ee;
+    border:1px solid rgba(255,255,255,.6);
+    border-radius:30px;
+
+    box-shadow:
+        0 15px 45px rgba(255,182,193,.30),
+        inset 0 1px 1px rgba(255,255,255,.8);
 
     position:relative;
     overflow:hidden;
 }
 
-#client-booking-form-panel::before{
-
+.liff-content::before{
     content:"";
-
     position:absolute;
-
-    top:-120px;
-    right:-120px;
-
-    width:260px;
-    height:260px;
-
-    background:linear-gradient(135deg,#ffd7ea,#ffc4dd);
-
-    border-radius:50%;
-
-    opacity:.45;
+    inset:-120px;
+    background:
+        linear-gradient(45deg,
+        transparent 45%,
+        rgba(255,255,255,.55) 50%,
+        transparent 55%);
+    animation:shine 8s linear infinite;
 }
 
-#client-booking-form-panel::after{
-
-    content:"";
-
-    position:absolute;
-
-    bottom:-90px;
-    left:-90px;
-
-    width:180px;
-    height:180px;
-
-    background:#ffeef6;
-
-    border-radius:50%;
+@keyframes shine{
+    from{
+        transform:translateX(-120%) rotate(20deg);
+    }
+    to{
+        transform:translateX(120%) rotate(20deg);
+    }
 }
 
 
-/* Heading */
-
-#client-booking-form-panel h3{
-
-    color:var(--primary-dark);
-
+/* หัวข้อ */
+h3,h4{
+    text-align:center;
+    color:#d84b86;
     font-weight:700;
+    letter-spacing:.5px;
+}
 
-    letter-spacing:1px;
-
+h3{
+    font-size:28px;
     margin-bottom:5px;
 }
 
-#client-booking-form-panel h4{
-
-    color:var(--primary);
-
-    font-weight:600;
-}
-
-#client-booking-form-panel p{
-
-    color:var(--text-muted);
+h4{
+    font-size:22px;
 }
 
 
-/* Profile */
-
-#lineprofile{
-
-    background:#fff5fa;
-
-    border:1px solid #ffd8e9;
-
-    border-radius:18px;
-
-    padding:15px;
-
-    margin-bottom:20px;
-}
-
-#lineprofile img{
-
-    border-radius:50%;
-
-    border:5px solid white;
-
-    box-shadow:0 8px 20px rgba(0,0,0,.08);
-}
-
-
-/* Form */
-
-.form-group{
-
-    margin-bottom:18px;
-}
-
+/* Label */
 .form-group label{
-
     display:block;
-
     margin-bottom:8px;
-
-    color:var(--text);
-
+    color:#d14f84;
     font-weight:600;
-
-    font-size:.92rem;
 }
+
+
+/* INPUT */
+.form-control,
+.form-control-sm,
+.form-control-date,
+select,
+textarea{
+
+    width:100%;
+    padding:13px 18px;
+
+    border-radius:16px;
+
+    border:1px solid rgba(255,255,255,.8);
+
+    background:rgba(255,255,255,.45);
+
+    backdrop-filter:blur(10px);
+
+    color:#5c4152;
+
+    transition:.35s;
+
+    box-shadow:
+        inset 0 1px 1px rgba(255,255,255,.7),
+        0 5px 15px rgba(255,182,193,.12);
+}
+
+.form-control:focus,
+.form-control-sm:focus,
+.form-control-date:focus,
+textarea:focus,
+select:focus{
+
+    outline:none;
+
+    background:white;
+
+    border-color:#ff6da7;
+
+    box-shadow:
+        0 0 0 4px rgba(255,105,180,.18),
+        0 15px 30px rgba(255,105,180,.15);
+
+    transform:translateY(-2px);
+}
+
+
+/* placeholder */
+
+::placeholder{
+    color:#b998a9;
+}
+
+
+/* row */
 
 .form-row{
-
     display:flex;
-
-    gap:15px;
+    gap:20px;
 }
 
 .form-row .form-group{
-
     flex:1;
 }
 
 
-/* Inputs */
+/* textarea */
 
-.form-control,
-.form-control-date{
-
-    width:100%;
-
-    padding:13px 16px;
-
-    border-radius:14px;
-
-    border:2px solid var(--border);
-
-    background:#fff;
-
-    font-size:.92rem;
-
-    transition:.3s;
-
-    outline:none;
-}
-
-textarea.form-control{
-
-    resize:vertical;
-}
-
-.form-control:hover,
-.form-control-date:hover{
-
-    border-color:#f5b4d0;
-}
-
-.form-control:focus,
-.form-control-date:focus{
-
-    border-color:var(--primary);
-
-    box-shadow:0 0 0 5px rgba(236,106,168,.15);
-
-    background:white;
+textarea{
+    resize:none;
 }
 
 
-/* Select */
-
-select.form-control{
-
-    cursor:pointer;
-}
-
-
-/* Radio */
+/* RADIO */
 
 input[type=radio]{
-
-    accent-color:var(--primary);
-
-    transform:scale(1.1);
-
-    margin-right:5px;
+    accent-color:#ff5f9e;
 }
 
 
-/* Pregnancy */
+/* BUTTON */
 
-#pregnancy-weeks-group{
-
-    background:#fff5f9;
-
-    border-left:4px solid var(--primary);
-
-    padding:15px;
-
-    border-radius:14px;
-}
-
-
-/* Special Massager */
-
-#liff-booking-request-massager{
-
-    border:2px solid #ffcf5f !important;
-
-    background:#fffdf6;
-}
-
-
-/* Button */
-
-.btn{
+.btn-secondary{
 
     width:100%;
+    margin-top:25px;
+
+    padding:15px;
 
     border:none;
 
-    border-radius:16px;
+    border-radius:50px;
 
-    padding:15px;
-
-    font-size:1rem;
-
+    font-size:17px;
     font-weight:700;
 
+    color:white;
+
     cursor:pointer;
+
+    background:
+    linear-gradient(135deg,
+    #ff8db8,
+    #ff5f9e,
+    #ff7eb5);
+
+    background-size:300% 300%;
+
+    animation:gradientMove 5s infinite;
+
+    box-shadow:
+        0 12px 30px rgba(255,105,180,.35);
 
     transition:.35s;
 }
 
-.btn-secondary{
-
-    background:linear-gradient(
-        135deg,
-        #ff84b8,
-        #ec6aa8
-    );
-
-    color:white;
-
-    box-shadow:
-    0 12px 30px rgba(236,106,168,.28);
+@keyframes gradientMove{
+    0%{background-position:0%;}
+    50%{background-position:100%;}
+    100%{background-position:0%;}
 }
 
 .btn-secondary:hover{
 
-    transform:translateY(-3px);
+    transform:translateY(-4px) scale(1.02);
 
     box-shadow:
-    0 18px 35px rgba(236,106,168,.35);
-}
-
-.btn-secondary:active{
-
-    transform:scale(.98);
+        0 18px 40px rgba(255,105,180,.45);
 }
 
 
-/* Small text */
+/* profile */
 
-small,
-.form-group div{
+#lineprofile img{
 
-    color:var(--text-muted);
+    width:110px;
+
+    height:110px;
+
+    border-radius:50%;
+
+    border:4px solid rgba(255,255,255,.8);
+
+    box-shadow:0 10px 25px rgba(255,182,193,.4);
 }
 
 
 /* Scroll */
 
 ::-webkit-scrollbar{
-
-    width:8px;
+    width:10px;
 }
 
 ::-webkit-scrollbar-thumb{
-
-    background:#f8b9d3;
-
-    border-radius:50px;
+    background:#ff9ec3;
+    border-radius:20px;
 }
 
 
-/* Responsive */
+/* Diamond Sparkle */
 
-@media(max-width:768px){
+.liff-content::after{
 
-    .liff-content{
+    content:"✦";
 
-        padding:12px;
+    position:absolute;
+
+    right:25px;
+    top:25px;
+
+    font-size:28px;
+
+    color:rgba(255,255,255,.95);
+
+    animation:sparkle 2s infinite ease-in-out;
+}
+
+@keyframes sparkle{
+
+    0%{
+        opacity:.2;
+        transform:scale(.7) rotate(0deg);
     }
 
-    #client-booking-form-panel{
-
-        padding:22px;
-        border-radius:22px;
+    50%{
+        opacity:1;
+        transform:scale(1.3) rotate(20deg);
     }
 
-    .form-row{
-
-        flex-direction:column;
-        gap:0;
+    100%{
+        opacity:.2;
+        transform:scale(.7) rotate(0deg);
     }
 
 }
+
+
     </style>
     <!-- <link rel="stylesheet" href="index.css">-->
   </head>
@@ -573,7 +499,7 @@ small,
                    
     <script charset="utf-8" src="https://static.line-scdn.net/liff/edge/versions/2.22.3/sdk.js"></script>
   
-    <script>
+    <script>   
       let userId = "";
 
       const logOut = () => {
@@ -599,7 +525,7 @@ small,
           liff.login();
         }
       };
-      main();
+      main(); 
 
       async function send() {
             const to = document.getElementById("lineUserIdtext").value.trim();
