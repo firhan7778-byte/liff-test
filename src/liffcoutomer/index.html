@@ -178,19 +178,15 @@ select:focus{
 /* ---------- Row ---------- */
 
 .form-row{
-
-    display:flex;
-
-    gap:15px;
-
+    display: flex;
+    gap: 15px;
+    align-items: flex-end;
 }
 
 .form-row .form-group{
-
-    flex:1;
-
+    flex: 1;
+    margin-bottom: 18px;
 }
-
 /* ---------- Radio ---------- */
 
 input[type=radio]{
@@ -364,6 +360,152 @@ textarea{
 
 }
 
+.info-box{
+    background:#fffdf8;
+    border:1px solid #f2dfb1;
+    border-left:5px solid #d4af37;
+    border-radius:16px;
+    padding:18px;
+    margin:18px 0;
+    box-shadow:0 8px 20px rgba(0,0,0,.05);
+}
+
+.info-title{
+    font-size:18px;
+    font-weight:700;
+    color:#b88914;
+    margin-bottom:15px;
+}
+
+.info-text{
+    font-size:14px;
+    color:#555;
+    line-height:1.8;
+}
+
+.massage-level{
+    background:#fff;
+    border-radius:12px;
+    padding:12px 14px;
+    margin-bottom:12px;
+    border:1px solid #eee;
+    transition:.25s;
+}
+
+.massage-level:hover{
+    transform:translateY(-2px);
+    box-shadow:0 8px 18px rgba(0,0,0,.08);
+}
+
+.massage-level strong{
+    color:#333;
+    font-size:15px;
+}
+
+/* ---------- โรคประจำตัว---------- */
+#otherDiseaseBox{
+    animation: fadeIn .3s ease;
+}
+
+@keyframes fadeIn{
+    from{
+        opacity:0;
+        transform:translateY(-8px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+/* ---------- อธิบายบิรการ ---------- */
+.payment-box{
+    margin-top:20px;
+}
+
+.payment-box hr{
+    border:none;
+    border-top:1px solid #eee;
+    margin:18px 0;
+}
+
+.payment-box h5{
+    margin:0 0 12px;
+    color:#b88914;
+    font-size:16px;
+}
+
+.payment-method{
+    background:#fff;
+    border:1px solid #ececec;
+    border-radius:12px;
+    padding:12px 15px;
+    margin-bottom:12px;
+    line-height:1.7;
+    transition:.25s;
+}
+
+.payment-method:hover{
+    transform:translateY(-2px);
+    box-shadow:0 8px 18px rgba(0,0,0,.06);
+}
+
+.contact-box{
+    background:#f8fff8;
+    border:1px solid #bdecc5;
+    border-radius:12px;
+    padding:15px;
+    text-align:center;
+}
+
+.line-btn{
+    display:inline-block;
+    margin-top:10px;
+    padding:10px 22px;
+    background:#06C755;
+    color:#fff;
+    text-decoration:none;
+    border-radius:30px;
+    font-weight:600;
+    transition:.25s;
+}
+
+.line-btn:hover{
+    background:#04b54d;
+    transform:translateY(-2px);
+}
+
+
+/* ----------รับทราบชำระเงิน---------- */
+.payment-confirm{
+    margin-top:18px;
+    padding:15px;
+    background:#fffdf5;
+    border:1px solid #efd88b;
+    border-radius:14px;
+}
+
+.checkbox-container{
+    display:flex;
+    align-items:flex-start;
+    gap:12px;
+    cursor:pointer;
+    font-size:14px;
+    line-height:1.7;
+    color:#444;
+}
+
+.checkbox-container input[type="checkbox"]{
+    width:20px;
+    height:20px;
+    margin-top:2px;
+    accent-color:#d4af37;
+    cursor:pointer;
+}
+
+.checkbox-container strong{
+    color:#b88914;
+}
 /* ---------- Responsive ---------- */
 
 @media(max-width:600px){
@@ -432,6 +574,11 @@ padding:18px;
                                                 <label>ชื่อ-นามสกุล *</label>
                                                 <input type="text" id="liff-client-name" class="form-control form-control-sm" required placeholder="ชื่อ-สกุล">
                                             </div>
+                                            <div class="form-group">
+                                                <label>ชื่อเล่น</label>
+                                                <input type="text" id="liff-client-nickname" class="form-control form-control-sm" required placeholder="ชื่อ-สกุล">
+                                            </div>
+
 
                                             <div class="form-group">
                                                 <label>เบอร์โทรศัพท์ *</label>
@@ -520,6 +667,42 @@ padding:18px;
                                                 <label>แผนที่ Google Map Link *</label>
                                                 <input type="url" id="liff-client-map" class="form-control form-control-sm" placeholder="เช่น https://maps.app.goo.gl/..." >
                                             </div>
+                                            <!-- กล่องอธิบาย -->
+                                            <div class="info-box">
+                                                <div class="info-title">
+                                                    💆 ระดับน้ำหนักแรงนวด
+                                                </div>
+
+                                                <div class="info-text">
+
+                                                    <div class="massage-level">
+                                                        <strong>🔵 ระดับ 1 (เบามาก)</strong><br>
+                                                        เหมาะสำหรับผู้ที่ไม่เคยนวดมาก่อน เน้นการสัมผัสและลูบไล้อย่างนุ่มนวล ช่วยกระตุ้นการไหลเวียนเลือดและน้ำเหลืองโดยไม่กดลึก
+                                                    </div>
+
+                                                    <div class="massage-level">
+                                                        <strong>🟢 ระดับ 2 (เบา)</strong><br>
+                                                        นวดคลายกล้ามเนื้อตื้น ใช้แรงพอรู้สึกสบาย ไม่เจ็บ เหมาะสำหรับผู้ที่ต้องการผ่อนคลายทั่วไป
+                                                    </div>
+
+                                                    <div class="massage-level">
+                                                        <strong>🟡 ระดับ 3 (ปานกลาง)</strong><br>
+                                                        ใช้น้ำหนักพอดี ลงถึงกล้ามเนื้อชั้นกลาง ให้ความรู้สึกผ่อนคลายและคลายอาการตึงได้ดี
+                                                    </div>
+
+                                                    <div class="massage-level">
+                                                        <strong>🟠 ระดับ 4 (หนัก)</strong><br>
+                                                        ลงน้ำหนักลึกถึงกล้ามเนื้อชั้นลึก เน้นคลายปมกล้ามเนื้อ (Trigger Point) และพังผืดที่ตึงแข็ง
+                                                    </div>
+
+                                                    <div class="massage-level">
+                                                        <strong>🔴 ระดับ 5 (หนักมาก / เฉพาะจุด)</strong><br>
+                                                        สำหรับการรักษาเฉพาะอาการ ต้องได้รับการประเมินจากแพทย์แผนไทยวิชาชีพก่อน ไม่เหมาะสำหรับการนวดผ่อนคลายทั่วไป และอาจมีอาการระบมหลังนวดได้
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
 
                                             <div class="form-row">
                                                 <div class="form-group">
@@ -537,6 +720,84 @@ padding:18px;
                                                     <input type="text" id="liff-client-pets" class="form-control form-control-sm" placeholder="เช่น มีแมว 2 ตัว, ไม่มี">
                                                 </div>
                                             </div>
+                                            <div class="form-group">
+                                                    <label>สัตว์เลี้ยงที่บ้าน</label>
+                                                    <input type="text" id="liff-client-pets" class="form-control form-control-sm" placeholder="เช่น มีแมว 2 ตัว, ไม่มี">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>⚠️ โรคประจำตัว</label>
+
+                                                    <select id="liff-client-disease"
+                                                            class="form-control form-control-sm"
+                                                            onchange="toggleDiseaseOther()">
+
+                                                        <option value="ไม่มี" selected>❌ ไม่มี</option>
+                                                        <option value="ความดันโลหิตสูง">⚠️ ความดันโลหิตสูง</option>
+                                                        <option value="เบาหวาน">⚠️ เบาหวาน</option>
+                                                        <option value="ครรภ์เป็นพิษ">⚠️ ครรภ์เป็นพิษ</option>
+                                                        <option value="รกเกาะต่ำ">⚠️ รกเกาะต่ำ</option>
+                                                        <option value="แท้งคุกคาม">⚠️ แท้งคุกคาม</option>
+                                                        <option value="กระดูกพรุน">⚠️ กระดูกพรุน</option>
+                                                        <option value="อื่นๆ">📝 อื่นๆ</option>
+
+                                                    </select>
+                                                </div>
+
+                                                <div class="form-group" id="otherDiseaseBox" style="display:none;">
+                                                    <label>ระบุโรคประจำตัว</label>
+
+                                                    <input type="text"
+                                                        id="liff-client-disease-other"
+                                                        class="form-control form-control-sm"
+                                                        placeholder="กรุณาระบุโรคประจำตัว">
+                                                </div>
+
+
+                                                    <div class="form-group">
+                                                        <label>⚠️ อาการ / ภาวะผิดปกติ</label>
+
+                                                        <select id="liff-client-condition"
+                                                                class="form-control form-control-sm"
+                                                                onchange="toggleConditionOther()">
+
+                                                            <option value="ไม่มี" selected>❌ ไม่มี</option>
+                                                            <option value="มีเลือดออกทางช่องคลอด">⚠️ มีเลือดออกทางช่องคลอด</option>
+                                                            <option value="ปวดท้องรุนแรง">⚠️ ปวดท้องรุนแรง</option>
+                                                            <option value="ปวดศีรษะรุนแรง">⚠️ ปวดศีรษะรุนแรง</option>
+                                                            <option value="กล้ามเนื้อ/ผิวหนัง บวม แดง ร้อน">⚠️ กล้ามเนื้อ/ผิวหนัง บวม แดง ร้อน</option>
+                                                            <option value="มีไข้หรือรู้สึกตัวร้อน">⚠️ มีไข้หรือรู้สึกตัวร้อน</option>
+                                                            <option value="อื่นๆ">📝 อื่นๆ</option>
+
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="form-group" id="otherConditionBox" style="display:none;">
+                                                        <label>ระบุอาการ / ภาวะผิดปกติ</label>
+
+                                                        <input type="text"
+                                                            id="liff-client-condition-other"
+                                                            class="form-control form-control-sm"
+                                                            placeholder="กรุณาระบุอาการหรือภาวะผิดปกติ">
+                                                    </div>
+
+                                                     <div class="form-group">
+                                                            <label>💊 ต้องรับประทานยาประจำตัวหรือไม่?</label>
+
+                                                            <select id="liff-client-medicine"
+                                                                    class="form-control form-control-sm"
+                                                                    onchange="toggleMedicineInput()">
+
+                                                                <option value="ไม่มี" selected>❌ ไม่มี</option>
+                                                                <option value="มี">⚠️ มี</option>
+
+                                                            </select>
+                                                        </div>
+
+
+
+
+
+
 
                                             <!-- Repeated Request -->
                                             <div class="form-group">
@@ -548,6 +809,111 @@ padding:18px;
                                                 <div style="font-size: 0.7rem; color: var(--text-muted); margin-top: 0.2rem;">
                                                     หากเลือกหมอคนเดิม ระบบจะจ่ายงานให้ท่านนั้นพิจารณาก่อน และแสดงกรอบสีทองพิเศษในระบบแอดมิน
                                                 </div>
+                                            </div>
+
+                                            <div class="info-box payment-box">
+
+                                                <div class="info-title">
+                                                    💳 การชำระค่าบริการ
+                                                </div>
+
+                                                <div class="info-text">
+
+                                                    <p>🔸 กรุณาชำระค่าบริการ <strong>เพื่อยืนยันคิวนัดหมายก่อนเข้ารับบริการ</strong></p>
+
+                                                    <p>🔸 การชำระเงินเป็นแบบ <strong>ชำระเต็มจำนวน</strong> เข้าบัญชีบริษัท <strong>โมโมมัม เวลเนส โซลูชั่น จำกัด</strong></p>
+
+                                                    <p>🔸 หลังจากเจ้าหน้าที่ตรวจสอบข้อมูลการจองและสรุปยอดค่าบริการแล้ว จะแจ้งยอดและระยะเวลาที่ต้องชำระเงินให้ทราบ</p>
+
+                                                    <hr>
+
+                                                    <h5>ช่องทางการชำระเงิน</h5>
+
+                                                    <div class="payment-method">
+                                                        <strong>📲 โอนเงินผ่านบัญชีบริษัท</strong><br>
+                                                        ชำระผ่านบัญชี บริษัท โมโมมัม เวลเนส โซลูชั่น จำกัด
+                                                    </div>
+
+                                                    <div class="payment-method">
+                                                        <strong>💳 บัตรเครดิต (LINE Pay)</strong><br>
+                                                        มีค่าธรรมเนียม <strong>3.25%</strong>
+                                                    </div>
+
+                                                    <hr>
+
+                                                    <div class="contact-box">
+                                                        <strong>📞 ติดต่อเจ้าหน้าที่</strong><br>
+
+                                                        LINE Official :
+                                                        <b>@momomom</b><br><br>
+
+                                                        <a href="https://lin.ee/lJrpO2M"
+                                                        target="_blank"
+                                                        class="line-btn">
+                                                            เปิด LINE Official
+                                                        </a>
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+                                            <hr>
+
+                                            <div class="payment-confirm">
+                                                <label class="checkbox-container">
+                                                    <input type="checkbox"
+                                                        id="payment-agree"
+                                                        required>
+
+                                                    <span class="checkmark"></span>
+
+                                                    <span>
+                                                        ข้าพเจ้าได้อ่านและ <strong>"รับทราบ"</strong>
+                                                        วิธีการชำระค่าบริการเรียบร้อยแล้ว
+                                                        <span style="color:#d32f2f;">*</span>
+                                                    </span>
+                                                </label>
+                                            </div>
+                                            <div class="info-box">
+
+                                                <div class="info-title">
+                                                    🐶 การปฏิบัติและเงื่อนไข กรณีมีสัตว์เลี้ยง
+                                                </div>
+
+                                                <div class="info-text">
+
+                                                    <p>
+                                                        🔸 หากมีสัตว์เลี้ยงภายในสถานที่ให้บริการ
+                                                        กรุณานำสัตว์เลี้ยงออกจากพื้นที่รับบริการตลอดระยะเวลาที่นักบำบัดปฏิบัติงาน
+                                                    </p>
+
+                                                    <p>
+                                                        🔸 หากไม่สามารถแยกสัตว์เลี้ยงออกจากพื้นที่รับบริการได้
+                                                        บริษัทขอสงวนสิทธิ์ในการปฏิเสธการให้บริการ
+                                                        เพื่อความปลอดภัยของผู้รับบริการและนักบำบัด รวมถึงความเหมาะสมในการปฏิบัติงาน
+                                                    </p>
+
+                                                    <hr>
+
+                                                    <div class="payment-confirm">
+                                                        <label class="checkbox-container">
+
+                                                            <input type="checkbox"
+                                                                id="pet-condition-agree"
+                                                                required>
+
+                                                            <span>
+                                                                ข้าพเจ้าได้อ่านและ
+                                                                <strong>"รับทราบ"</strong>
+                                                                การปฏิบัติและเงื่อนไขกรณีมีสัตว์เลี้ยงเรียบร้อยแล้ว
+                                                                <span style="color:#d32f2f;">*</span>
+                                                            </span>
+
+                                                        </label>
+                                                    </div>
+
+                                                </div>
+
                                             </div>
 
                                             <div class="form-group">
@@ -615,6 +981,36 @@ padding:18px;
         }
       };
       main(); 
+
+
+      function toggleDiseaseOther() {
+
+            const disease = document.getElementById("liff-client-disease").value;
+            const otherBox = document.getElementById("otherDiseaseBox");
+
+            if (disease === "อื่นๆ") {
+                otherBox.style.display = "block";
+            } else {
+                otherBox.style.display = "none";
+                document.getElementById("liff-client-disease-other").value = "";
+            }
+
+            }
+
+
+         function toggleConditionOther() {
+
+                    const value = document.getElementById("liff-client-condition").value;
+                    const otherBox = document.getElementById("otherConditionBox");
+
+                    if (value === "อื่นๆ") {
+                        otherBox.style.display = "block";
+                    } else {
+                        otherBox.style.display = "none";
+                        document.getElementById("liff-client-condition-other").value = "";
+                    }
+
+                }
 
       async function send() {
             const to = document.getElementById("lineUserIdtext").value.trim();
