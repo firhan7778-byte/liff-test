@@ -574,7 +574,9 @@ padding:18px;
                                     <div>
                                         สวัสดี คุณ <b><span id="profileName"></span></b>
                                     </div>
-                                    <div type="hidden" >UID <span id="profileUID">UID : </span></div>
+
+                                    <input type="hidden" id="profileUID">
+                                    <h5 style="color: var(--primary); font-size: 1.25rem;">MOMOMOM ยินดีให้บริการคุณลูกค้าค่ะ </h5>
                                     </div>
                                      <h4 style="color: var(--primary); font-size: 1.25rem;">แบบฟอร์มกรอกประวัติใช้บริการ </h4>
                                      <h3 style="color: var(--primary); font-size: 1.25rem;"> MOMOMOM WELLNESS</h3>
@@ -1032,6 +1034,27 @@ padding:18px;
                     }
 
                 }
+
+                
+                function resetClientBookingForm() {
+    document.getElementById('liff-booking-form').reset();
+    document.getElementById('client-booking-form-panel').classList.remove('d-none'); 
+    document.getElementById('client-success-panel').classList.add('d-none');
+    togglePregnancyInput(false);
+}
+
+
+        
+            function togglePregnancyInput(isPregnant) {
+                const grp = document.getElementById('pregnancy-weeks-group');
+                if (isPregnant) {
+                    grp.classList.remove('d-none');
+                    document.getElementById('liff-pregnancy-weeks').setAttribute('required', 'true');
+                } else {
+                    grp.classList.add('d-none');
+                    document.getElementById('liff-pregnancy-weeks').removeAttribute('required');
+                }
+            }
 
       async function send() {
             const to = document.getElementById("lineUserIdtext").value.trim();
