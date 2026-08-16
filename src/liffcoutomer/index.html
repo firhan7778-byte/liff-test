@@ -778,10 +778,7 @@ padding:18px;
                                                     <input type="text" id="liff-client-pets" class="form-control form-control-sm" placeholder="เช่น มีแมว 2 ตัว, ไม่มี">
                                                 </div>
                                             </div>
-                                            <div class="form-group">
-                                                    <label>สัตว์เลี้ยงที่บ้าน</label>
-                                                    <input type="text" id="liff-client-pets" class="form-control form-control-sm" placeholder="เช่น มีแมว 2 ตัว, ไม่มี">
-                                                </div>
+                                            
                                                 <div class="form-group">
                                                     <label>⚠️ โรคประจำตัว</label>
 
@@ -1133,7 +1130,7 @@ padding:18px;
             const duration = document.getElementById("liff-booking-duration").value.trim();
             const guests = document.getElementById("liff-booking-guests").value.trim();
             const packageName = document.getElementById("liff-booking-package").value.trim();
-            const weeks = document.getElementById("pregnancy_weeks").value.trim();
+            const weeks = document.getElementById("pregnancyWeeks").value.trim();
             const address = document.getElementById("liff-client-address").value.trim();
             const map = document.getElementById("liff-client-map").value.trim();
             const level = document.getElementById("liff-booking-level").value.trim();
@@ -1142,14 +1139,14 @@ padding:18px;
             const note = document.getElementById("liff-client-note").value.trim();
             const payment = document.getElementById("payment-agree").value.trim();
             const pet = document.getElementById("pet-condition-agree").value.trim();
-            const pdpa = document.getElementById("pdpa_agree").value.trim();
-             const result = await saveBooking();
-
+            const pdpa = document.getElementById("pdpa-agree").value.trim();
+             //const result = await saveBooking();
+/*
             if (!result.success) {
                 alert("บันทึกข้อมูลไม่สำเร็จ");
                 return;
             }
-
+  */
 
 
 
