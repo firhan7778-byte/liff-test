@@ -1462,16 +1462,7 @@ function updateLiffPackages() {
     });
 }
 
-function togglePregnancyInput(isPregnant) {
-    const grp = document.getElementById('pregnancy-weeks-group');
-    if (isPregnant) {
-        grp.classList.remove('d-none');
-        document.getElementById('liff-pregnancy-weeks').setAttribute('required', 'true');
-    } else {
-        grp.classList.add('d-none');
-        document.getElementById('liff-pregnancy-weeks').removeAttribute('required');
-    }
-}
+
 
 function handleClientBookingSubmit(e) {
     e.preventDefault();
