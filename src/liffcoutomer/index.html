@@ -673,10 +673,10 @@ padding:18px;
                                                 <label class="form-label fw-semibold">
                                                     กำลังตั้งครรภ์อยู่หรือไม่?
                                                 </label>
+                                                <div class="d-flex gap-4 mt-2 flex-nowrap">
 
-                                                <div class="d-flex gap-4 mt-2">
-                                                    <div class="form-check">
-                                                        <input class="form-check-input"
+                                                    <div class="form-check d-flex align-items-center">
+                                                        <input class="form-check-input mt-0"
                                                             type="radio"
                                                             name="pregnancy-check"
                                                             id="pregnancyNo"
@@ -684,42 +684,43 @@ padding:18px;
                                                             checked
                                                             onchange="togglePregnancyInput(false)">
 
-                                                        <label class="form-check-label" for="pregnancyNo">
+                                                        <label class="form-check-label ms-2 mb-0 text-nowrap" for="pregnancyNo">
                                                             ❌ ไม่ได้ตั้งครรภ์
                                                         </label>
                                                     </div>
 
-                                                    <div class="form-check">
-                                                        <input class="form-check-input"
+                                                    <div class="form-check d-flex align-items-center">
+                                                        <input class="form-check-input mt-0"
                                                             type="radio"
                                                             name="pregnancy-check"
                                                             id="pregnancyYes"
                                                             value="yes"
                                                             onchange="togglePregnancyInput(true)">
 
-                                                        <label class="form-check-label" for="pregnancyYes">
+                                                        <label class="form-check-label ms-2 mb-0 text-nowrap" for="pregnancyYes">
                                                             🤰 ตั้งครรภ์
                                                         </label>
                                                     </div>
+
                                                 </div>
                                             </div>
 
-                                            <div class="form-group d-none" id="pregnancy-weeks-group">
-                                                <label class="form-label">
-                                                    อายุครรภ์ (สัปดาห์) <span class="text-danger">*</span>
+                                            <div id="pregnancyInput" class="form-group mb-3" style="display: none;">
+                                                <label for="pregnancyWeeks" class="form-label fw-semibold">
+                                                    อายุครรภ์
                                                 </label>
 
-                                                <input
-                                                    type="number"
-                                                    id="liff-pregnancy-weeks"
-                                                    class="form-control"
-                                                    placeholder="เช่น 24"
-                                                    min="1"
-                                                    max="40">
+                                                <div class="input-group">
+                                                    <input type="number"
+                                                        class="form-control"
+                                                        id="pregnancyWeeks"
+                                                        name="pregnancy_weeks"
+                                                        min="1"
+                                                        max="45"
+                                                        placeholder="กรอกอายุครรภ์">
 
-                                                <small class="text-muted">
-                                                    กรุณาระบุอายุครรภ์เป็นจำนวนสัปดาห์
-                                                </small>
+                                                    <span class="input-group-text">สัปดาห์</span>
+                                                </div>
                                             </div>
 
                                             <div class="form-group">
@@ -1077,16 +1078,16 @@ padding:18px;
                 }
             
                 function togglePregnancyInput(isPregnant) {
-                    const pregnancyInput = document.getElementById('pregnancyInput');
-                    const pregnancyWeeks = document.getElementById('pregnancyWeeks');
+                    const input = document.getElementById('pregnancyInput');
+                    const weeks = document.getElementById('pregnancyWeeks');
 
                     if (isPregnant) {
-                        pregnancyInput.style.display = 'block';
-                        pregnancyWeeks.required = true;
+                        input.style.display = 'block';
+                        weeks.required = true;
                     } else {
-                        pregnancyInput.style.display = 'none';
-                        pregnancyWeeks.required = false;
-                        pregnancyWeeks.value = '';
+                        input.style.display = 'none';
+                        weeks.required = false;
+                        weeks.value = '';
                     }
                 }
 
