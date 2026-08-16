@@ -673,39 +673,32 @@ padding:18px;
                                                 <label class="form-label fw-semibold">
                                                     กำลังตั้งครรภ์อยู่หรือไม่?
                                                 </label>
-                                                <div class="d-flex gap-4 mt-2 flex-nowrap">
 
-                                                    <div class="form-check d-flex align-items-center">
-                                                        <input class="form-check-input mt-0"
-                                                            type="radio"
+                                                <div class="pregnancy-options">
+
+                                                    <label class="pregnancy-option">
+                                                        <input type="radio"
                                                             name="pregnancy-check"
                                                             id="pregnancyNo"
-                                                            value="no"
+                                                            value="ไม่ได้ตั้งครรภ์"
                                                             checked
                                                             onchange="togglePregnancyInput(false)">
+                                                        <span>❌ ไม่ได้ตั้งครรภ์</span>
+                                                    </label>
 
-                                                        <label class="form-check-label ms-2 mb-0 text-nowrap" for="pregnancyNo">
-                                                            ❌ ไม่ได้ตั้งครรภ์
-                                                        </label>
-                                                    </div>
-
-                                                    <div class="form-check d-flex align-items-center">
-                                                        <input class="form-check-input mt-0"
-                                                            type="radio"
+                                                    <label class="pregnancy-option">
+                                                        <input type="radio"
                                                             name="pregnancy-check"
                                                             id="pregnancyYes"
                                                             value="yes"
                                                             onchange="togglePregnancyInput(true)">
-
-                                                        <label class="form-check-label ms-2 mb-0 text-nowrap" for="pregnancyYes">
-                                                            🤰 ตั้งครรภ์
-                                                        </label>
-                                                    </div>
+                                                        <span>🤰 ตั้งครรภ์</span>
+                                                    </label>
 
                                                 </div>
                                             </div>
 
-                                            <div id="pregnancyInput" class="form-group mb-3" style="display: none;">
+                                            <div id="pregnancyInput" class="info-box" style="display: none;">
                                                 <label for="pregnancyWeeks" class="form-label fw-semibold">
                                                     อายุครรภ์
                                                 </label>
@@ -717,9 +710,8 @@ padding:18px;
                                                         name="pregnancy_weeks"
                                                         min="1"
                                                         max="45"
-                                                        placeholder="กรอกอายุครรภ์">
-
-                                                    <span class="input-group-text">สัปดาห์</span>
+                                                        placeholder="กรอกอายุครรภ์ (week)">
+                                                    
                                                 </div>
                                             </div>
 
@@ -773,6 +765,7 @@ padding:18px;
                                                 <div class="form-group">
                                                     <label>ระดับน้ำหนักแรงนวด</label>
                                                     <select id="liff-booking-level" class="form-control form-control-sm">
+                                                        <option value="ยังไม่เลือกระกับน้ำหนักนวด">เลือกน้ำหนักนวด</option>
                                                         <option value="เบามาก ">เบามาก </option>
                                                         <option value="เบา">เบา</option>
                                                         <option value="ปานกลาง " selected>ปานกลาง</option>
@@ -925,6 +918,8 @@ padding:18px;
                                                 <label class="checkbox-container">
                                                     <input type="checkbox"
                                                         id="payment-agree"
+                                                        name="payment-agree"
+                                                        value="ข้าพเจ้าได้อ่านและรับทราบวิธีการชำระค่าบริการ"
                                                         required>
 
                                                     <span class="checkmark"></span>
@@ -965,6 +960,8 @@ padding:18px;
 
                                                             <input type="checkbox"
                                                                 id="pet-condition-agree"
+                                                                name="pet-condition-agree"
+                                                                value="ข้าพเจ้าได้อ่านและรับทราบเงื่อนไขกรณีมีสัตว์เลี้ยง"
                                                                 required>
 
                                                             <span>
@@ -978,6 +975,38 @@ padding:18px;
                                                     </div>
 
                                                 </div>
+
+                                            </div>
+                                            <div class="info-box">
+                                                 <div class="info-title">
+                                                    <p> การปฏิบัติและเงื่อนไขเกี่ยวกับการคุ้มครองข้อมูลส่วนบุคคล (PDPA)</p>
+                                                 </div>
+                                                 <hr>
+                                                 <div class="info-text">    
+                                                    <p>🔸 บริษัทจะเก็บรวบรวม ใช้ และ/หรือเปิดเผยข้อมูลส่วนบุคคลของข้าพเจ้าเท่าที่จำเป็น เพื่อวัตถุประสงค์ในการให้บริการ การติดต่อประสานงาน การนัดหมาย การให้บริการหลังการขาย และการดำเนินการอื่นที่เกี่ยวข้องกับการให้บริการ โดยเป็นไปตามกฎหมายคุ้มครองข้อมูลส่วนบุคคล</p>
+                                                    <p>🔸 บริษัทจะดำเนินการจัดเก็บและรักษาข้อมูลส่วนบุคคลของข้าพเจ้าอย่างเหมาะสม และจะไม่เก็บ ใช้ หรือเปิดเผยข้อมูลเกินกว่าวัตถุประสงค์และฐานทางกฎหมายที่กำหนด เว้นแต่ได้รับความยินยอมจากข้าพเจ้าหรือมีกฎหมายอนุญาตหรือกำหนดไว้</p>
+                                                    
+                                                    <p>🔸 ข้าพเจ้าสามารถใช้สิทธิตามกฎหมายคุ้มครองข้อมูลส่วนบุคคล เช่น ขอเข้าถึง ขอแก้ไข ขอให้ลบหรือทำลายข้อมูล ขอระงับการใช้ข้อมูล หรือถอนความยินยอมในกรณีที่กฎหมายกำหนด ทั้งนี้ ภายใต้หลักเกณฑ์และข้อยกเว้นตามกฎหมาย</p>
+                                                </div>
+                                                 <div class="payment-confirm">
+                                                    <label class="checkbox-container">
+
+                                                        <input type="checkbox"
+                                                            id="pdpa-agree"
+                                                            name="pdpa_agree"
+                                                            value="ข้าพเจ้าได้อ่านและรับทราบ PDPA"
+                                                            required>
+
+                                                        <span>
+                                                            ข้าพเจ้าได้อ่านและ
+                                                            <strong>"รับทราบ"</strong>
+                                                            การปฏิบัติและเงื่อนไขเกี่ยวกับการคุ้มครองข้อมูลส่วนบุคคล (PDPA) เรียบร้อยแล้ว
+                                                            <span style="color:#d32f2f;">*</span>
+                                                        </span>
+
+                                                    </label>
+                                                </div>
+
 
                                             </div>
 
@@ -1111,7 +1140,9 @@ padding:18px;
             const pets = document.getElementById("liff-client-pets").value.trim();
             const massager = document.getElementById("liff-booking-request-massager").value.trim();
             const note = document.getElementById("liff-client-note").value.trim();
-           
+            const payment = document.getElementById("payment-agree").value.trim();
+            const pet = document.getElementById("pet-condition-agree").value.trim();
+            const pdpa = document.getElementById("pdpa_agree").value.trim();
              const result = await saveBooking();
 
             if (!result.success) {
@@ -1142,7 +1173,9 @@ padding:18px;
             "ระดับนวด: " + level + "\n" +
             "สัตว์เลี้ยง: " + pets + "\n" +
             "ระบุเจาะจงหมอ: " + massager + "\n" +
-           "หมายเหตุลูกค้า: " + note;
+           "หมายเหตุลูกค้า: " + note+"\n\n"+
+           payment+"\n"+pet+"\n"+pdpa+"\n"
+           ;
 
             if (!to || !message) {
                 alert("กรุณากรอก User ID และข้อความ");

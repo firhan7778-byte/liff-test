@@ -308,6 +308,7 @@ button, input, select, textarea {
     gap: 0.6rem;
 }
 
+
 /* Buttons styling */
 .btn {
     padding: 0.6rem 1.2rem;
@@ -1172,4 +1173,36 @@ button, input, select, textarea {
     max-width: 400px;
     display: flex;
     flex-direction: column;
+}
+.pregnancy-options {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 25px !important;
+    margin-top: 10px;
+}
+
+.pregnancy-option {
+    display: inline-flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    width: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    white-space: nowrap !important;
+    cursor: pointer;
+}
+
+.pregnancy-option input[type="radio"] {
+    display: inline-block !important;
+    width: auto !important;
+    margin: 0 8px 0 0 !important;
+    flex-shrink: 0 !important;
+}
+
+.pregnancy-option span {
+    display: inline !important;
+    width: auto !important;
+    white-space: nowrap !important;
+    margin: 0 !important;
 }
