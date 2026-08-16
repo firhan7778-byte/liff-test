@@ -1,8 +1,12 @@
 const bcrypt = require("bcrypt");
 
 async function run() {
-    const hash = await bcrypt.hash("123456", 10);
+    const password = "123456";
+    const hash = await bcrypt.hash(password, 10);
     console.log(hash);
+    const isMatch = await bcrypt.compare(password, hash);
+    console.log("Hash generated successfully");
+ 
 }
 
 run();
