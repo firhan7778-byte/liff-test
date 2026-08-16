@@ -6,7 +6,7 @@ const path = require("path");
 
 const app = express();
 
-const db = require("./db");
+// const db = require("./db");
 const bcrypt = require("bcrypt");
 const adminRoute = require("./routes/admin");
 
