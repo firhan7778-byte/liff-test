@@ -1140,6 +1140,9 @@ padding:18px;
             const payment = document.getElementById("payment-agree").value.trim();
             const pet = document.getElementById("pet-condition-agree").value.trim();
             const pdpa = document.getElementById("pdpa-agree").value.trim();
+            const clientdisease = document.getElementById("liff-client-disease").value.trim();
+            const clientcondition = document.getElementById("liff-client-condition").value.trim();
+            const clientmedicine = document.getElementById("liff-client-medicine").value.trim();
              //const result = await saveBooking();
 /*
             if (!result.success) {
@@ -1156,8 +1159,8 @@ padding:18px;
 
             "รายละเอียดการจอง"+"\n\n"+
             
-             "รหัสบริการ"+"\n"+ "รหัสป้าหมอ"+"\n"+ 
-             "นัดหมาย วันที่ " + date +" เวลา: " + time + "\n" +
+            "รหัสบริการ"+"\n"+ "รหัสป้าหมอ"+"\n"+ 
+            "นัดหมาย วันที่ " + date +" เวลา: " + time + "\n" +
             "บริการนวด: " + service + "\n" +
             "เวลาคอร์ส : " + duration + "\n" +
             "แพ็คเกจ/คอร์ส : " + packageName + "\n" +
@@ -1168,10 +1171,13 @@ padding:18px;
             "ที่อยู่: " + address + "\n" +
             "แผนที่ Google Map: " + map + "\n" +
             "ระดับนวด: " + level + "\n" +
+            "โรคประจำตัว: "+ clientdisease + "\n" +
+            "อาการ / ภาวะผิดปกติ: "+ clientcondition + "\n" +
+            "ต้องรับประทานยาประจำตัวหรือไม่?: "+ clientmedicine + "\n" +
             "สัตว์เลี้ยง: " + pets + "\n" +
             "ระบุเจาะจงหมอ: " + massager + "\n" +
-           "หมายเหตุลูกค้า: " + note+"\n\n"+
-           payment+"\n"+pet+"\n"+pdpa+"\n"
+            "หมายเหตุลูกค้า: " + note+"\n\n"+
+             payment+"\n"+pet+"\n"+pdpa+"\n"
            ;
 
             if (!to || !message) {
@@ -1196,14 +1202,28 @@ padding:18px;
                 console.log(data);
 
                 if (data.success) {
-                    alert("ส่งข้อความสำเร็จ");
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'ขอบพระคุณที่ไว้วางใจเรา',
+                        text: 'เราได้รับข้อมูลของท่านเรียบร้อยแล้ว ทีมงานจะติดต่อกลับเพื่อประสานงานและดูแลท่านอย่างเหมาะสมโดยเร็วที่สุด',
+                        confirmButtonText: 'ตกลง',
+                        confirmButtonColor: '#10b981',
+                        timer:1500,
+                        timerProgressBar: true
+                    });
                 } else {
-                    alert(JSON.stringify(data));
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'เกิดข้อผิดพลาด กรุณาติดต้อแอกมิน',
+                        text: JSON.stringify(data),
+                        confirmButtonText: 'ตกลง',
+                        confirmButtonColor: '#ef4444'
+                    });
                 }
 
             } catch (err) {
                 console.error(err);
-                alert("ไม่สามารถเชื่อมต่อ Server ได้");
+                alert("ไม่สามารถเชื่อมต่อ Server ได้ กรุณาติดต้อแอกมิน");
             }
         }
 
