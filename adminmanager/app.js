@@ -369,17 +369,78 @@ async function loadAdminProfile(){
 
 }
 
-function loginWithLineMock() {
-    currentAdminName = 'แอดมินปทุมวัน (LINE OA)';
-    authorizeSession();
+async function loginWithLineMock() {
+    try {
+        // 1. Initialize LIFF
+        await liff.init({
+            liffId: "2011162499-uL9GwzK2"
+        });
+
+        console.log("LIFF initialized");
+
+        // 2. ถ้ายังไม่ได้ Login
+        if (!liff.isLoggedIn()) {
+            console.log("Not logged in, redirecting to LINE...");
+            liff.login();
+            return;
+        }
+
+        // 3. ดึง Profile
+        const profile = await liff.getProfile();
+
+        console.log("LINE Profile:", profile);
+
+        // 4. เก็บชื่อ
+        currentAdminName = profile.displayName;
+
+        // 5. แสดงข้อมูล Profile
+        profileImage.src = profile.pictureUrl || "";
+        profileName.innerText = profile.displayName;
+        profileUID.innerText = profile.userId;
+
+        // 6. เก็บ LINE User ID
+        document.getElementById("lineUserIdtext").value = profile.userId;
+
+        // 7. แสดง Profile
+        lineprofile.style.display = "block";
+
+        // 8. Login เข้า Admin System
+        authorizeSession();
+
+    } catch (error) {
+        console.error("LINE Login Error:", error);
+
+        // แสดง error จริงเพื่อ debug
+        alert(
+            "LINE Login Error:\n\n" +
+            (error.message || error)
+        );
+    }
 }
+
 
 function authorizeSession() {
     isLoggedIn = true;
-    sessionStorage.setItem('admin_logged_in', 'true');
-    document.getElementById('admin-login-overlay').classList.remove('active');
-    document.getElementById('active-admin-name').innerText = currentAdminName;
-    showToast('เข้าสู่ระบบสำเร็จ', `ยินดีต้อนรับกลับมาค่ะคุณ ${currentAdminName}`, 'info');
+
+    sessionStorage.setItem(
+        'admin_logged_in',
+        'true'
+    );
+
+    document
+        .getElementById('admin-login-overlay')
+        .classList.remove('active');
+
+    document
+        .getElementById('active-admin-name')
+        .innerText = currentAdminName;
+
+    showToast(
+        'เข้าสู่ระบบสำเร็จ',
+        `ยินดีต้อนรับกลับมาค่ะคุณ ${currentAdminName}`,
+        'info'
+    );
+
     initSystem();
 }
 
